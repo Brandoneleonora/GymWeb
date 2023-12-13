@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-function LogIn({ setUser, setlogged, setUserId }){
+function LogIn({ setUser, setlogged }){
     let password = useRef()
     let user = useRef()
     const navigate = useNavigate()
@@ -26,8 +26,7 @@ function LogIn({ setUser, setlogged, setUserId }){
         })
         .then(data => {
             console.log(data)
-            setUser(data.username)
-            setUserId(data.id)
+            setUser(data)
             setlogged(true)
             navigate('/')
         })

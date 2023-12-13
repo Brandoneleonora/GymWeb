@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function SignUp({ setUser, setlogged, setUserId }){
+function SignUp({ setUser, setlogged }){
     let first_name = useRef()
     let last_name = useRef()
     let password = useRef()
@@ -30,8 +30,7 @@ function SignUp({ setUser, setlogged, setUserId }){
         })
         .then(data => {
             console.log(data)
-            setUser(data.username)
-            setUserId(setUserId)
+            setUser(data)
             setlogged(true)
             navigate('/')
         })

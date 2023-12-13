@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css"
-import {Routes, Route, Navigate} from 'react-router-dom'
+import {Routes, Route, Navigate, useNavigate} from 'react-router-dom'
 import SignUp from "./SignUp";
 import Home from "./Home";
 import LogIn from "./LogIn";
@@ -19,12 +19,11 @@ import Create from "./Create";
 
 
 function App() {
-  const [username, setUsername] = useState('')
-  const [userId, setUserId] = useState("")
+  const [user, setUser] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
   const [allPost, setAllPost] = useState(null)
-  const [profilePhotos, setProfilePhotos] = useState()
- 
+  const navigate = useNavigate()
+
   useEffect(() => {
     (async () => {
       try{
@@ -34,8 +33,9 @@ function App() {
         }
         const data = await resp.json()
         setLoggedIn(true)
-        setUsername(data.username)
+        setUser(data)
       }catch (error){
+        navigate('login')
         console.log("error")
       }
      
@@ -53,7 +53,6 @@ function App() {
         }
         const data = await resp.json()
         setAllPost(data)
-        setProfilePhotos(allPost.filter(e => userId == e.user_id))
       }catch (error){
         console.log("error")
       }
@@ -62,17 +61,17 @@ function App() {
     )();
   }, [])
 
-
+  
   return (
     <main>
       {loggedIn ? <NavBar/> : console.log("hello")}
       <Routes>
-        <Route path="/" element={loggedIn ? <Home/> : <Navigate replace to={"/login"} />}/>
-        <Route path="profile" element={loggedIn ? <Profile user={username} setlogged={setLoggedIn} post={profilePhotos}/> : <Navigate replace to={"/login"} />}/>
+        <Route path="/" element={<Home/>}/>
+        <Route path="profile" element={loggedIn ? <Profile user={user} setlogged={setLoggedIn} post={allPost}/> : <Navigate replace to={"/login"} />}/>
         <Route path='groups' element={loggedIn ? <Groups/> : <Navigate replace to={"/login"} />}/>
-        <Route path='login' element={<LogIn setUser={setUsername} setlogged={setLoggedIn} setUserId={setUserId}/>}/>
-        <Route path="signup" element={<SignUp setuser={setUsername} setlogged={setLoggedIn} setUserId={setUserId}/>}/>
-        <Route path="/create" element={<Create user={username} userId={userId}/>}/>
+        <Route path='login' element={<LogIn setUser={setUser} setlogged={setLoggedIn} />}/>
+        <Route path="signup" element={<SignUp setuser={setUser} setlogged={setLoggedIn}/>}/>
+        <Route path="/create" element={<Create user={user} />}/>
         <Route path="posts/powerlifter" element={<Powerlifter_Group/>}/>
         <Route path="posts/powerbuilder" element={<Powerbuilder_Group/>}/>
         <Route path="posts/crossfit" element={<Crossfit_Group/>}/>

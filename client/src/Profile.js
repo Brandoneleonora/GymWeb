@@ -6,9 +6,7 @@ import blank from "./white.jpg"
 function Profile({ user, setlogged, post }){
     const [profile, setProfile] = useState("")
     const navigate = useNavigate()
-
-
-
+    const [profilePhotos, setProfilePhotos] = useState(post.filter(p => user.id == p.user_id))
 
     useEffect(() => {
         fetch(`/profile/${user}`)
@@ -67,7 +65,7 @@ function Profile({ user, setlogged, post }){
                     </div>
                     <div class="profile-photos">
                         <ul>
-                            {post.map(p => {
+                            {profilePhotos.map(p => {
                                 if(p.image !== null){
                                     return(
                                     <li><img src={p.image}/></li>

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import white from  "./white.jpg"
-function Create({ user, userId }){
+function Create({ user }){
     const [image, setImage] = useState("")
     const [typeOfPost, setPostType] = useState("")
 
@@ -90,10 +90,10 @@ function Create({ user, userId }){
             headers: {"Content-type": "application/json"},
             body:  JSON.stringify({
                 post_type: typeOfPost,
-                post_username : user,
+                post_username : user.username,
                 image: image,
                 body: caption,
-                user: userId
+                user: user.id
             })
         })
         .then(res => res.json())
