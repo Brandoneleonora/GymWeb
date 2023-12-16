@@ -1,26 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import blank from "./white.jpg"
-
+import ProfileModal from "./ProfileModal"
 
 function Profile({ user, setlogged, post }){
-    const [profile, setProfile] = useState("")
     const navigate = useNavigate()
-    const [profilePhotos, setProfilePhotos] = useState(post.filter(p => user.id == p.user_id))
+    const [profilePhotos, setProfilePhotos] = useState(post.filter(p => user.id === p.user_id))
+    const [showModal, setShowModal] = useState(false)
 
-    useEffect(() => {
-        fetch(`/profile/${user}`)
-        .then(res => res.json())
-        .then(data => {
-            setProfile(data)
-        })
-
-
-       
-    }, [])
-
-
-    function handleOnClick(){
+    function handleLogOut(){
         fetch('/logout')
         .then(res => res.json())
         .then(data => {
@@ -30,14 +18,27 @@ function Profile({ user, setlogged, post }){
         })
     }
 
+    const handleEditProfile = () =>{
+        setShowModal(!showModal)
+    }
+
+    if (showModal) {
+        document.body.classList.add("active-modal")
+    }else{
+        document.body.classList.remove("active-modal")
+    }
+
+
+
 
     return(
         <div class="profile-wrapper">
+            {showModal && <ProfileModal setShowModal={setShowModal} showModal={showModal}/>}
             <div class="profile-container">
                 <div class="left-container">
                     <div class="profile-image">
                         <img src={blank}/>
-                        <span>{"Emanuel Smith"}</span>
+                        <span>{user.username}</span>
                     </div>
                     <div class="right-header">    
                         <div class='profile-details'>
@@ -48,8 +49,8 @@ function Profile({ user, setlogged, post }){
                             </ul>
                         </div>
                         <div class="nav-btns">
-                            <button>Edit Profile</button>
-                            <button onClick={handleOnClick}>Log Out</button>
+                            <button onClick={handleEditProfile} class="openAccount">Edit Profile</button>
+                            <button onClick={handleLogOut}>Log Out</button>
                         </div>  
                         <div class="profile-bio">
                             <h3>Bio</h3>
@@ -70,10 +71,11 @@ function Profile({ user, setlogged, post }){
                                     return(
                                     <li><img src={p.image}/></li>
                                     )
+                                }else{
+                                    return <li><img src={blank}/></li>
                                 }
                             })}  
-                        </ul>
-                       
+                        </ul>  
                     </div>
                 </div>
             </div>
