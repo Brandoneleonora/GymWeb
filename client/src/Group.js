@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import Footer from "./Footer"
 import { useNavigate } from "react-router-dom"
 
 
@@ -19,11 +18,6 @@ function Groups(){
 
     return(
         <div class="wrapper">
-            <section class="init-image">
-                <div>
-                    <h1>Join Your Community</h1>
-                </div>  
-            </section>
             <section class="group-grid">
                 <div class="post-group">
                     <h2>Bodybuilder</h2>
@@ -43,9 +37,6 @@ function Groups(){
                 <div class="post-group">
                     <h2>All</h2>   
                 </div>
-            </section>
-            <section class="footer">
-                <Footer/>
             </section>
         </div>
     )

@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
+import blank from "./white.jpg"
 
 
 function NavBar(){
@@ -11,9 +11,8 @@ function NavBar(){
             </div>
             <div class='navbar-options'>
                 <NavLink to={"/"}>Home</NavLink>
-                <NavLink to={'/groups'}>Groups</NavLink>
                 <NavLink to={"/create"}>Create</NavLink>
-                <NavLink to={"/profile"}>Profile</NavLink>
+                <NavLink to={"/profile"}><img src={blank}/></NavLink>
             </div>
         </div>
     )

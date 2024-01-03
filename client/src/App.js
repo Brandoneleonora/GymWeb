@@ -68,7 +68,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="profile" element={<Profile user={user} setlogged={setLoggedIn} post={allPost}/>}/>
-        <Route path='groups' element={<Groups/> }/>
         <Route path='login' element={<LogIn setUser={setUser} setlogged={setLoggedIn} />}/>
         <Route path="signup" element={<SignUp setuser={setUser} setlogged={setLoggedIn}/>}/>
         <Route path="/create" element={<Create user={user} />}/>
