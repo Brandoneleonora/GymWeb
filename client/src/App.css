@@ -196,18 +196,27 @@ body.active-modal {
 .navbar-options {
     display: flex;
     align-items: center;
+    
 }
 
 
 .navbar-options a{
     display: block;
-    padding: 1rem 2.5rem;
+    margin: 0 2.5rem;
     color: #fff;
     text-decoration: none;
     text-align: center;
     font-size: 1.2rem;
-    position: relative;
 }
+
+.navbar-options a:nth-child(1),
+.navbar-options a:nth-child(2),
+.navbar-options a:nth-child(3){
+    background: rgb(138, 135, 135);
+    padding:.75rem;
+    border-radius: 50%;
+}
+
 
 .navbar-options a img {
     width: 75px;
@@ -217,90 +226,13 @@ body.active-modal {
 
 /*Home Page Css*/
 
-
 .wrapper {
-    width: 100%;
-}
-
-
-.init-image{
-    display: flex;
-    align-items:center;
-    justify-content: center;
-    padding: 20rem 0;
-    position: relative;
-    background: black;
-}
-
-
-.init-image::before {
-    content: "";
-    background-image: url("landing.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    opacity: 0.5;
-}
-
-
-
-
-.init-image div h1 {
-    position: relative;
-    color: #fff;
-    font-size: 3rem;
-
-
-
-
-}
-
-
-.section-styles {
-    margin-inline: auto;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
-    column-gap: 0.5rem;
-    padding: 3rem 3rem;
-    border-bottom-style: solid;
-    border-bottom-color: #fff;
-    border-bottom-width: 1px;
+    grid-template-columns: 20% 60% 20%;
 }
 
 
-.section-styles div h2,
-.section-styles div span{
-    color: #fff;
-}
 
-
-.section-styles div span {
-    font-size: 1.2rem;
-}
-
-
- 
-.grid-descriptions,
-.section-images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.section-images img {
-    width: 65%;
-    position: center;
-    object-fit: cover;
-    border-radius: 10px;
-}
 
 
 /*Group Page*/
@@ -943,4 +875,69 @@ select.active {
 .profileModal-container button:hover {
     background-color:#24ff1c;
     transition: 0.4s ease-in-out;
+}
+
+
+/*Friends.js*/
+
+ .content-wrapper {
+    width: 100%;
+    max-height: 40rem;
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+
+ }
+
+ .content-container {
+    width: 100%;
+    background:#7c7d7e;
+    border-radius: 10px;
+    margin-right: 1rem;
+ }
+
+ .friend_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem 1.5rem;
+    position: relative;
+ }
+
+.friend_header::after {
+    content:"";
+    background: black;
+    width: 100%;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+
+.wrapper_header {
+    display: grid;
+    grid-template-columns: 25% 55% 20%;
+    margin: 1rem;
+}
+
+.wrapper_header div:nth-child(1) img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.wrapper_header div:nth-child(2) h3 {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.wrapper_header div:nth-child(2) p {
+    font-size: 1rem;
+}
+
+.wrapper_header div:nth-child(3){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }

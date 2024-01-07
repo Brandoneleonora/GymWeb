@@ -1,9 +1,10 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState} from "react"
 import { useNavigate } from "react-router-dom"
-
+import Carousel from 'react-simply-carousel';
 
 function Groups(){
     const navigate = useNavigate()
+    const [activeSlide, setActiveSlide] = useState(0);
 
     useEffect(() => {
         const groups = document.querySelectorAll(".post-group")
@@ -17,7 +18,7 @@ function Groups(){
     
 
     return(
-        <div class="wrapper">
+        <div class="carousel-wrapper">
             <section class="group-grid">
                 <div class="post-group">
                     <h2>Bodybuilder</h2>
