@@ -9,12 +9,17 @@ function Home(){
     return(
         <>
         <div class='wrapper'>
-           <div>hello</div>
-            <div>
+           <div class="left_wrapper">
                 <Groups/>
-                <All_Group/>
             </div>
-            <Suggest_Friends/>
+            <div class="middle_wrapper">
+                <div class="bottom-portion">
+                    <All_Group/>
+                </div>
+            </div>
+            <div class="right_wrapper">
+                <Suggest_Friends/>
+            </div>
         </div>
         <section class="footer">
             <Footer/>
