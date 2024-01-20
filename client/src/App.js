@@ -64,7 +64,6 @@ function App() {
   
   return (
     <main>
-      {loggedIn ? <NavBar/> : console.log("hello")}
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="profile" element={<Profile user={user} setlogged={setLoggedIn} post={allPost}/>}/>

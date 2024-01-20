@@ -5,20 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-
+import { faCircleUser} from '@fortawesome/free-solid-svg-icons'
 
 function NavBar(){
     return(
         <div class="navbar-container">
-            <div class="navbar-logo">
-                <NavLink to={'/'}><span>Gym</span><span>Eco.</span></NavLink>
-            </div>
-            <div class='navbar-options'>
-                <NavLink to={"/"}><FontAwesomeIcon icon={faHouse} size='xl'/></NavLink>
-                <NavLink to={"/create"}><FontAwesomeIcon icon={faPlusCircle} size='xl'/></NavLink>
-                <NavLink to={"/messages"}><FontAwesomeIcon icon={faComment} size='xl'/></NavLink>  
-                <NavLink to={"/profile"}><img src={blank}/></NavLink>
-            </div>
+            <NavLink to={'/'}><span>Gym</span><span>Eco.</span></NavLink>
+            <NavLink to={"/"}><FontAwesomeIcon icon={faHouse} size='xl'/><span>Home</span></NavLink>
+            <NavLink to={"/create"}><FontAwesomeIcon icon={faPlusCircle} size='xl'/><span>Create</span></NavLink>
+            <NavLink to={"/messages"}><FontAwesomeIcon icon={faComment} size='xl'/><span>Messages</span></NavLink>  
+            <NavLink to={"/profile"}><FontAwesomeIcon icon={faCircleUser} size='xl'/><span>Profile</span></NavLink>
         </div>
     )
 }

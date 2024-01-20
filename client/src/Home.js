@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import All_Group from "./All_Group";
 import Groups from "./Group.js"
 import Suggest_Friends from "./Friends.js";
+import NavBar from "./NavBar.js"
 
 function Home(){
 
@@ -10,12 +11,10 @@ function Home(){
         <>
         <div class='wrapper'>
            <div class="left_wrapper">
-                <Groups/>
+                <NavBar/>
             </div>
             <div class="middle_wrapper">
-                <div class="bottom-portion">
-                    <All_Group/>
-                </div>
+                <All_Group/>
             </div>
             <div class="right_wrapper">
                 <Suggest_Friends/>
