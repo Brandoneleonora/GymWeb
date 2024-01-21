@@ -20,9 +20,6 @@ function Home(){
                 <Suggest_Friends/>
             </div>
         </div>
-        <section class="footer">
-            <Footer/>
-        </section>
         </>
         
     )

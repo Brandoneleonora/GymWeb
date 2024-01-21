@@ -20,7 +20,7 @@ function Suggest_Friends(){
                             <h3>Brandon Eleonora</h3>
                             <p>10 Mutual Friends</p>
                         </div>
-                        <div><FontAwesomeIcon icon={faUserPlus} size="lg"/></div>
+                        <button><FontAwesomeIcon icon={faUserPlus} size="lg"/></button>
                     </div>
                 </div>
             </div>
