@@ -527,101 +527,74 @@ select.active {
 
 .header_right {
     position: relative;
-}
-
-.icon_btn,
-.cancel-button{
-    position: absolute;
+    width: 10%;
 }
 
 .icon_btn.inactive {
     position: absolute;
+    right: 25%;
     z-index: 1;
     transition: var(--speed) ease;
 }
 
 .icon_btn.active {
     position: absolute;
-    opacity: 0;
+    right: 25%;
+    z-index: 1;
     transition: var(--speed) ease;
 }
 
-.cancel_button.active {
+
+.edit_list{
+    --speed: 0.4s;
+    --dropdown-menu-Y: 2.5rem;
     position: absolute;
-    transform: translateX(-4px);
+    right: 0;
+    list-style: none;
+    background:#ffffff;
+    width: 7rem;
+    border-radius: 5px;
+}
+
+.edit_list li {
+    --box-padding: .75rem;
+    list-style: none;
+    padding: var(--box-padding) 0;
+    padding-left: var(--box-padding);
+}
+
+.edit_list span {
+    margin-left: 0.3rem;
+}
+
+.edit_list li button {
+    color: black;
+}
+
+.edit_list.active {
+    transform: translateY(var(--dropdown-menu-Y));
     opacity: 1;
     transition: var(--speed) ease;
 }
 
-.cancel_button.inactive {
-    position: absolute;
+.edit_list.inactive {
+    transform: translateY(calc(var(--dropdown-menu-Y) - var(--dropdown-menu-Y)));
     opacity: 0;
+    z-index: 0;
     transition: var(--speed) ease;
 }
 
-.edit_list li{
-    --speed: 0.5s;
-    --button-distance-X: 2rem;
-    --button-distance-Y: 2.5rem;
-    position: absolute;
-    list-style: none;
-    background:#7c7d7e;
-    padding: .5rem;
-    border-radius: 50%;
-}
 
-.edit_list button {
+.edit_list.inactive button {
     font-size: .75rem;
 }
 
 
-
-.edit_list.active li:nth-child(2) {
-    opacity: 1;
-    transform: translate(var(--button-distance-X), calc(var(--button-distance-Y) * -1));
-    transition: var(--speed) ease;
+.edit_list.active button {
+    font-size: .75rem;
 }
 
-.edit_list.active li:nth-child(1) {
 
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(calc(var(--button-distance-X) + 2rem));
-    transition: var(--speed) ease;
-}
-
-.edit_list.active li:nth-child(3) {
-    opacity: 1;
-    transform: translate(var(--button-distance-X), var(--button-distance-Y));
-    transition: var(--speed) ease;
-}
-
-.edit_list.active li:nth-child(2) {
-    opacity: 1;
-    transform: translate(var(--button-distance-X), calc(var(--button-distance-Y) * -1));
-    transition: var(--speed) ease;
-}
-
-.edit_list.inactive li:nth-child(1) {
-    z-index: 0;
-    opacity: 0;
-    transform: translateX(calc((var(--button-distance-X) + 2rem) - (var(--button-distance-X) + 2rem)));
-    transition: var(--speed) ease;
-}
-
-.edit_list.inactive li:nth-child(3) {
-    z-index: 0;
-    opacity: 0;
-    transform: translate(calc(var(--button-distance-X) - var(--button-distance-X)), calc(var(--button-distance-Y) - var(--button-distance-Y)));
-    transition: var(--speed) ease;
-}
-
-.edit_list.inactive li:nth-child(2) {
-    z-index: 0;
-    opacity: 0;
-    transform: translate(calc(var(--button-distance-X) - var(--button-distance-X)), calc(var(--button-distance-Y) - var(--button-distance-Y)));
-    transition: var(--speed) ease;
-}
 
 
 .left-buttons button,
@@ -631,7 +604,7 @@ select.active {
     cursor: pointer;
     border:none;
     color: #fff;
-    font-size: 1.rem;
+    font-size: 1rem;
  
 }
 
@@ -641,37 +614,22 @@ select.active {
     opacity: 0.75;
 }
 
-.user-caption {
+
+
+
+
+
+.user-likes,
+.post-words {
     color: white;
-    padding:0.6rem;
+    margin: 0.6rem 0;
 }
 
 
-
-
-
-.user-likes {
-    color: white;
-    margin-bottom: 0.6rem;
-}
-
-
+.post-words span,
 .user-likes span {
     font-weight: bold;
     margin-right: 0.3rem;
-}
-
-
-
-
-.post-words {
-    margin-bottom: 0.6rem;
-}
-
-
-.post-words span {
-    font-weight: bold;
- 
 }
 
 

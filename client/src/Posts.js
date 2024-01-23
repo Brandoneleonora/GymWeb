@@ -22,11 +22,10 @@ function Post({ caption, username, image}){
                 </div>
                 <div class="header_right">
                     <button class={`icon_btn ${open ? "active" : "inactive"}`} onClick={() => setOpen(!open)}><FontAwesomeIcon icon={faEllipsisVertical} size={"xl"} /></button>
-                    <button class={`cancel_button ${open ? "active" : "inactive"}` } onClick={() => setOpen(!open)}><FontAwesomeIcon icon={faXmark} size={"xl"} /></button>
                     <ul class={`edit_list ${open ? "active" : "inactive"}`}>
-                        <li><button><FontAwesomeIcon icon={faBookmark} size={"xl"} /></button></li>
-                        <li><button><FontAwesomeIcon icon={faEdit} size={"xl"} /></button></li>
-                        <li><button><FontAwesomeIcon icon={faTrash} size={"xl"} /></button></li>
+                        <li><button><FontAwesomeIcon icon={faBookmark} size={"xl"} /><span>Save</span></button></li>
+                        <li><button><FontAwesomeIcon icon={faEdit} size={"xl"} /><span>Edit</span></button></li>
+                        <li><button><FontAwesomeIcon icon={faTrash} size={"xl"} /><span>Delete</span></button></li>
                     </ul>
                 </div>
                 
