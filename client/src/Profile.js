@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import blank from "./white.jpg"
 import ProfileModal from "./ProfileModal"
+import NavBar from "./NavBar.js"
 
 function Profile({ user, setlogged, post }){
     const navigate = useNavigate()
@@ -33,6 +34,7 @@ function Profile({ user, setlogged, post }){
 
     return(
         <div class="profile-wrapper">
+            <NavBar/>
             {showModal && <ProfileModal setShowModal={setShowModal} showModal={showModal}/>}
             <div class="profile-container">
                 <div class="left-container">

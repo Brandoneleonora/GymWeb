@@ -10,15 +10,9 @@ function Home(){
     return(
         <>
         <div class='wrapper'>
-           <div class="left_wrapper">
-                <NavBar/>
-            </div>
-            <div class="middle_wrapper">
-                <All_Group/>
-            </div>
-            <div class="right_wrapper">
-                <Suggest_Friends/>
-            </div>
+            <NavBar/>
+            <All_Group/>
+            <Suggest_Friends/>
         </div>
         </>
         
