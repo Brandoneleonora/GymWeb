@@ -1,6 +1,8 @@
 
 
-*{
+*,
+*::before,
+*::after{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -165,78 +167,237 @@ body.active-modal {
 }
 /*NavBar css*/
 
-.navbar-container {
-    max-height: 100vh;
+.navbar-wrapper {
+    height: 100vh;
+    width: 350px;
     top: 0;
     position: sticky;
-    background-color: var(--accent-color);
-    display: grid;
-    gap: 3rem;
+    background: var(--seconday-color);
+    box-shadow: 0 0 1px black;
+}
+
+.navbar-container {
+    padding: 0.75rem 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.top-navbar,
+.bottom-navbar{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.top-navbar button,
+.bottom-navbar button {
+    border:none;
+    font-size: 1rem;
+    background: none;
 
 }
 
-.navbar-container a:nth-child(1) span:nth-child(1){
-    color:#fff;
-    font-weight: bold;
-    font-size: 2rem;
-   
-}
-
-
-.navbar-container a:nth-child(1) span:nth-child(2){
-    color:#24ff1c;
-    font-weight: normal;
-    font-size: 2rem;
-}
-
-
-.navbar-container a{
+.top-navbar a,
+.top-navbar button,
+.bottom-navbar button{
+    padding: .75rem 1rem;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    list-style: none;
     text-decoration: none;
-    color: white;
-    font-size: 1.5rem;
-    margin-left: 2rem;
-    padding: 1.5rem 2rem;
-    border-radius: 100vw 0 0 100vw;
-    transition: all 0.4s ease-in-out;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color ease 0.3s,
+                color ease 0.3s;
+}
+
+.top-navbar a:hover:not(a:nth-child(1)),
+.top-navbar button:hover,
+.bottom-navbar button:hover {
+    background: var(--second-accent-color);
+    color: #fff;
 }
 
 
-.navbar-container a:hover {
-    background:#242526;
+.top-navbar a:nth-child(1) {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.top-navbar a:nth-child(1) span:nth-child(1) {
+    color: black;  
+}
+
+.top-navbar a:nth-child(1) span:nth-child(2) {
+    color: var(--second-accent-color)
+}
+
+.top-navbar a:nth-child(1) span:nth-child(3),
+.top-navbar a:nth-child(1) span:nth-child(4){
+    display: none;
+}
+
+
+.top-navbar a span:not(a:nth-child(1) span),
+.top-navbar button span,
+.bottom-navbar span {
+    margin-left: 1rem;
+}
+
+.filter-button {
+    width: 100%;
     position: relative;
 }
 
-.navbar-container a:nth-child(2) span:nth-child(2),
-.navbar-container a:nth-child(3) span:nth-child(2),
-.navbar-container a:nth-child(4) span:nth-child(2),
-.navbar-container a:nth-child(5) span:nth-child(2){
-    padding-left: 1rem;
+.filter-down-inactive,
+.filter-up-active  {
+    opacity: 1;
+    position: absolute;
+    right: 10%;
 }
 
-.navbar-container a:before {
-    background:#242526;
+.filter-down-active,
+.filter-up-inactive {
+    opacity: 0;
+    position: absolute;
+    right: 10%;
+}
+
+.filter-container{
+    width: 100%;
+    height: 2px;
     position: relative;
 }
 
-
-
-
-.navbar-options a:nth-child(1),
-.navbar-options a:nth-child(2),
-.navbar-options a:nth-child(3),
-.navbar-options a:nth-child(4){
-    padding:.75rem;
-    border-radius: 50%;
+.filter-list{
+    --menu-Y: 1rem;
+    list-style:none;
+    display:flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: absolute;
+    top: 1;
+    right: 100px;
 }
 
+
+.filter-list.menu-active {
+    opacity: 1;
+    transform: translateY(var(--menu-Y));
+    transition: 0.3s ease;
+}
+
+.filter-list.menu-inactive {
+    opacity: 0;
+    transform: translateY(calc(var(--menu-Y) * -1));
+    transition: 0.3s ease;
+}
+
+
+.filter-list li {
+    padding: 0.5rem 0.5rem;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-list li:hover {
+    background:rgba(138, 134, 134, 0.4)
+}
+
+@media (width < 1250px) {
+
+    .top-navbar a span:nth-child(2),
+    .top-navbar a:nth-child(1) span:nth-child(1),
+    .top-navbar button span:nth-child(3),
+    .top-navbar button span:nth-child(4),   
+    .top-navbar button span:nth-child(2),
+    .bottom-navbar button span:nth-child(2) {
+        display: none;
+    }
+
+    .top-navbar a:nth-child(1) span:nth-child(3),
+    .top-navbar a:nth-child(1) span:nth-child(4) {
+        font-size: 1.5rem;
+        display: block;
+    }
+
+    .top-navbar a:nth-child(1) span:nth-child(4) {
+        color: var(--second-accent-color);
+    }
+
+
+
+    .navbar-wrapper {
+        width: 90px;
+    }
+
+
+}
+
+
+
+
+@media (width < 770px) {
+
+    .navbar-wrapper {
+        background: none;
+        box-shadow: none;
+    }
+
+    .navbar-container {
+        box-shadow: 0 0 1px black;
+        background: var(--seconday-color);
+        display: flex;
+        flex-direction: row;
+        position: fixed;
+        z-index: 4;
+        bottom: 0;
+        height: 75px;
+        width: 100%;
+    }
+
+    .top-navbar a:nth-child(1),
+    .bottom-navbar {
+        display: none;
+    }
+
+    .filter-button {
+        width: fit-content;
+    }
+
+    .top-navbar {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .filter-container {
+        width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .filter-list li {
+        display: none;
+    }
+}
 
 
 /*Home Page Css*/
 
 .wrapper {
-    --top-of-screen-padding: 2rem;
-    display: grid;
-    grid-template-columns: 17.5% 1fr 30%;
+    display: flex;
 }
 
 
@@ -468,12 +629,19 @@ select.active {
 
 .post-wrapper {
     max-width: 1000px;
-    margin-inline: auto;
+    /* margin-inline: auto; */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+@media (width < 770) {
+    .post-wrapper {
+        position: absolute;
+        margin-inline: auto;
+        z-index: 1;
+    }
+}
 
 .post-container {
     border-bottom-style: solid;
@@ -518,19 +686,6 @@ select.active {
     width: 10%;
 }
 
-.icon_btn.inactive {
-    position: absolute;
-    right: 25%;
-    z-index: 1;
-    transition: var(--speed) ease;
-}
-
-.icon_btn.active {
-    position: absolute;
-    right: 25%;
-    z-index: 1;
-    transition: var(--speed) ease;
-}
 
 
 .edit_list{
@@ -563,6 +718,7 @@ select.active {
     transform: translateY(var(--dropdown-menu-Y));
     opacity: 1;
     transition: var(--speed) ease;
+    z-index: 0;
 }
 
 .edit_list.inactive {
@@ -842,7 +998,7 @@ select.active {
 /*Friends.js*/
 
  .content-wrapper {
-    margin-inline: auto;
+    /* margin-inline: auto; */
     max-width: 80%;
     max-height: 40rem;
     display: flex;

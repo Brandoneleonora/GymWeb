@@ -3,11 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart} from '@fortawesome/free-solid-svg-icons'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 
 function Post({ caption, username, image}){
@@ -21,7 +20,7 @@ function Post({ caption, username, image}){
                     <p>{username}</p>
                 </div>
                 <div class="header_right">
-                    <button class={`icon_btn ${open ? "active" : "inactive"}`} onClick={() => setOpen(!open)}><FontAwesomeIcon icon={faEllipsisVertical} size={"xl"} /></button>
+                    <button class={`icon_btn `} onClick={() => setOpen(!open)}><FontAwesomeIcon icon={faEllipsis} size={"xl"} /></button>
                     <ul class={`edit_list ${open ? "active" : "inactive"}`}>
                         <li><button><FontAwesomeIcon icon={faBookmark} size={"xl"} /><span>Save</span></button></li>
                         <li><button><FontAwesomeIcon icon={faEdit} size={"xl"} /><span>Edit</span></button></li>
