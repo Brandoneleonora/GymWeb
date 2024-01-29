@@ -311,7 +311,7 @@ body.active-modal {
     background:rgba(138, 134, 134, 0.4)
 }
 
-@media (width < 1250px) {
+@media (width < 1350px) {
 
     .top-navbar a span:nth-child(2),
     .top-navbar a:nth-child(1) span:nth-child(1),
@@ -347,8 +347,9 @@ body.active-modal {
 @media (width < 770px) {
 
     .navbar-wrapper {
-        background: none;
         box-shadow: none;
+        width: 0;
+        z-index: 3;
     }
 
     .navbar-container {
@@ -399,6 +400,8 @@ body.active-modal {
 .wrapper {
     display: flex;
 }
+
+
 
 
 /*Group Page*/
@@ -627,21 +630,20 @@ select.active {
 /*Post Css*/
 
 
+
+.post-cont {
+    margin-inline: auto;
+    display: flex;
+}
+
 .post-wrapper {
-    max-width: 1000px;
-    /* margin-inline: auto; */
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-inline: auto;
 }
 
-@media (width < 770) {
-    .post-wrapper {
-        position: absolute;
-        margin-inline: auto;
-        z-index: 1;
-    }
-}
 
 .post-container {
     border-bottom-style: solid;
@@ -649,7 +651,7 @@ select.active {
     border-bottom-color: white;
     margin-bottom: 2rem;
     background: var(--seconday-color);
-    width: 50%;
+    width: 100%;
 }
 
 
@@ -683,14 +685,18 @@ select.active {
 
 .header_right {
     position: relative;
-    width: 10%;
 }
 
+.icon_btn {
+    right: 0;
+    z-index: 2;
+    position:absolute;
+}
 
 
 .edit_list{
     --speed: 0.4s;
-    --dropdown-menu-Y: 2.5rem;
+    --dropdown-menu-Y: 1.5rem;
     position: absolute;
     right: 0;
     list-style: none;
@@ -997,12 +1003,18 @@ select.active {
 
 /*Friends.js*/
 
+    @media (width < 1110px) {
+        .content-container,
+        .content-wrapper {
+            display: none;
+        }
+
+    }
+
  .content-wrapper {
-    /* margin-inline: auto; */
-    max-width: 80%;
-    max-height: 40rem;
-    display: flex;
-    justify-content: center;
+    width: 383px;
+    margin-left: 4rem;
+    height: fit-content;
 
  }
 
@@ -1010,7 +1022,6 @@ select.active {
     width: 100%;
     background: var(--secondary-color);
     border-radius: 10px;
-    /* margin-right: 1rem; */
  }
 
  .friend_header {
@@ -1044,11 +1055,13 @@ select.active {
     margin: 0 .5rem;
     cursor: pointer;
     background:none;
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease,
+                color 0.2s ease;
 }
 
 .wrapper_header button:hover {
-    background:#636464;
+    background:var(--second-accent-color);
+    color: #fff;
 }
 
 .wrapper_header div:nth-child(1) img{
@@ -1072,7 +1085,3 @@ select.active {
     align-items: center;
     cursor: pointer;
 }
-
-/* .slick-slide > div{
-    margin: 0 1rem;
-} */

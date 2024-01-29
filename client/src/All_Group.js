@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Posts";
-
+import Suggest_Friends from "./Friends.js";
 
 
 function All_Group(){
@@ -13,13 +13,15 @@ function All_Group(){
     },[])
 
     return(
-        <div class="post-wrapper">
-            {post != null && post.map(p => {
-                return(
-                    <Post caption={p.body} username={p.post_username} image={p.image}/>
-                )
-            })}
-            <Post/>
+        <div class="post-cont">
+            <div class="post-wrapper">
+                {post != null && post.map(p => {
+                    return(
+                        <Post caption={p.body} username={p.post_username} image={p.image}/>
+                    )
+                })}
+            </div>
+            <Suggest_Friends/>
         </div>
     )
 }
