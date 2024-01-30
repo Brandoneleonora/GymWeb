@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Posts";
 import Suggest_Friends from "./Friends.js";
-
+import Create_Post from "./Create_Post.js";
 
 function All_Group(){
     const [post, setPost] = useState(null)
@@ -15,6 +15,7 @@ function All_Group(){
     return(
         <div class="post-cont">
             <div class="post-wrapper">
+                <Create_Post/>
                 {post != null && post.map(p => {
                     return(
                         <Post caption={p.body} username={p.post_username} image={p.image}/>

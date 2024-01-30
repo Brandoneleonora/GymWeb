@@ -5,7 +5,6 @@ import SignUp from "./SignUp";
 import Home from "./Home";
 import LogIn from "./LogIn";
 import NavBar from "./NavBar";
-import Groups from "./Group";
 import Profile from "./Profile";
 import All_Group from "./All_Group";
 import Bodybuilder_Group from "./Bodybuilder_Group";
