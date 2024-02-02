@@ -8,7 +8,7 @@ function Suggest_Friends(){
         <div class="content-wrapper">
             <div class="content-container">
                 <div class="friend_header">
-                    <h4>Friend Request</h4>
+                    <h4>Suggested Friends</h4>
                     <button>See All</button>
                 </div>
                 <div class="friend_wrapper">
