@@ -906,8 +906,8 @@ select.active {
 
 .image-container button {
     right: 0;
-    bottom: 0;
-    margin: 0 2rem 2rem 0;
+    top: 0;
+    margin: 2rem 2rem 0 0;
     border: none;
     border-radius: 5px;
     padding: 0.5rem;
@@ -1037,7 +1037,7 @@ select.active {
 }
 
 .profile-images img {
-    /* object-fit: cover; */
+    object-fit: cover;
     object-fit: center;
     height: 100%;
     width: 100%;
@@ -1066,7 +1066,7 @@ select.active {
     }
 }
 
-@media (width < 750px) {
+@media (width < 990px) {
 
     .photo-container {
         padding: 0;
@@ -1077,6 +1077,19 @@ select.active {
         grid-auto-rows: 1fr;
     }
     
+}
+
+@media (width < 550px) {
+
+    .profile-navbar {
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 1rem 0.5rem;
+    }
+
+    .profile-navbar ul{
+        width: 70%;
+    }
 }
 /*Profile Modal*/
 
@@ -1238,5 +1251,138 @@ select.active {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+
+
+/*Messages Css*/
+
+.messages-wrapper {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.messages-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.people-container {
+    background: white;
+    position: sticky;
+    top: 0;
+    padding: 1rem;
+    height: fit-content;
+    z-index: 2;
+}
+
+.people-container ul::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+.people-container ul::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 10px;
+  }
+
+.people-container ul {
+    display: flex;
+    width: 100%;
+    gap: 5rem;
+    overflow-x: auto;
+}
+
+.people-container li {
+    padding: 1.5rem 0.5rem;
+    width:fit-content;
+    text-wrap: nowrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.people-container li img{
+    border-radius: 50%;
+    width: 75px;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 0.5rem;
+}
+
+.people-messages {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.people-messages-container {
+    display: flex;
+    height: 100%;
+    padding: 2rem 0 3rem 0;
+}
+
+.people-messages-container ul{
+    width: 100%;
+    padding: 1rem 1rem 0;
+    display: grid; 
+    gap: 1.25rem;
+}
+
+.people-messages-container li{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-message {
+    display: flex;
+    align-items: flex-end;
+}
+
+.secondary-message p{
+    background: var(--second-accent-color);
+    width: fit-content;
+    padding: 0.5rem;
+}
+
+.main-message p{
+    background: white;
+}
+
+.main-message p, 
+.secondary-message p {
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+.input-message-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    background: white;
+    bottom: 0;
+    width: 100%; 
+    padding: .75rem;
+}
+
+.input-message-container input{
+    border: none;
+    width: 100%;
+    background: rgba(134, 124, 124, 0.151);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-right: 1rem;
+}
+
+.input-message-container button {
+    border: none;
+    border-radius: 5px;
+    background: var(--second-accent-color);
+    padding: .75rem;
     cursor: pointer;
 }
