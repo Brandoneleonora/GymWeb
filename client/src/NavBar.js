@@ -12,11 +12,13 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import { faG } from '@fortawesome/free-solid-svg-icons'
 import { faE } from '@fortawesome/free-solid-svg-icons'
+import { faSun } from '@fortawesome/free-solid-svg-icons'
+import { faMoon } from '@fortawesome/free-solid-svg-icons'
 
 
 
 function NavBar(){
-
+    const [darkMode, setDarkMode] = useState(true)
     const [filterActive, setFilterActive] = useState(false)
 
     return(
@@ -28,8 +30,9 @@ function NavBar(){
                     <NavLink to={"/create"}><FontAwesomeIcon icon={faPlusCircle} size='xl'/><span>Create</span></NavLink>
                     <NavLink to={"/messages"}><FontAwesomeIcon icon={faMessage} size='xl'/><span>Messages</span></NavLink>  
                     <NavLink to={"/profile"}><FontAwesomeIcon icon={faCircleUser} size='xl'/><span>Profile</span></NavLink>
+                    {darkMode ? <button class={"lightMode"} onClick={() => setDarkMode(!darkMode)}><FontAwesomeIcon icon={faSun} size='xl'/><span>Light Mode</span></button> : <button class={"darkMode"} onClick={() => setDarkMode(!darkMode)} ><FontAwesomeIcon icon={faMoon} size='xl'/><span>Dark Mode</span></button>}
                     <div class="filter-container">   
-                        <button class="filter-button" onClick={() => setFilterActive(!filterActive)}><FontAwesomeIcon icon={faFilter} size='xl'/><span>Filter</span><span class={`${filterActive ? "filter-down-active" : "filter-down-inactive"}`}><FontAwesomeIcon icon={faAngleDown} /></span><span class={`${filterActive ? "filter-up-active" : "filter-up-inactive"}`}><FontAwesomeIcon icon={faAngleUp} /></span></button>
+                        <button class="filter-button" onClick={() => {setFilterActive(!filterActive)}}><FontAwesomeIcon icon={faFilter} size='xl'/><span>Filter</span><span class={`${filterActive ? "filter-down-active" : "filter-down-inactive"}`}><FontAwesomeIcon icon={faAngleDown} /></span><span class={`${filterActive ? "filter-up-active" : "filter-up-inactive"}`}><FontAwesomeIcon icon={faAngleUp} /></span></button>
                         <ul class={`filter-list ${filterActive ? "menu-active" : "menu-inactive"}`}>
                             <li>BodyBuilding</li>
                             <li>Powerlifting</li>

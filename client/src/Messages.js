@@ -11,25 +11,21 @@ function Messages() {
                 <div class='people-container'>
                     <ul>
                         <li>
-                            <img src={blank}/>
-                            <span>Kristen</span>
+                            <a href={'#'}>
+                                <img src={blank}/>
+                                <span>Kristen</span>
+                            </a>  
                         </li>
                         <li>
-                            <img src={blackblank}/>
-                            <span>Kristen Eleonora</span>
-                        </li>
-                        <li>
-                            <img src={blank}/>
-                            <span>Kristen Eleonora</span>
-                        </li>
-                        <li>
-                            <img src={blackblank}/>
-                            <span>Kristen Eleonora</span>
+                            <a href={'#'}>
+                                <img src={blackblank}/>
+                                <span>Kristen Eleonora</span>
+                            </a>  
                         </li>
                     </ul>
                 </div>
-                <div class="people-messages">
-                    <div class="people-messages-container">
+                <div class="people-messages-container">
+                    <div class="chat-container">
                         <ul>
                             <li class="main-message">
                                 <span>Brandon</span>
@@ -46,15 +42,7 @@ function Messages() {
                             <li class="main-message">
                                 <span>Brandon</span>
                                 <p>How are you doing today?</p>
-                            </li>
-                            <li class="secondary-message">
-                                <span>Kristen</span>
-                                <p>Pretty Good</p>
-                            </li>                            
-                            <li class="secondary-message">
-                                <span>Kristen</span>
-                                <p>Pretty Good</p>
-                            </li>                            
+                            </li>                                             
                             <li class="main-message">
                                 <span>Brandon</span>
                                 <p>How are you doing today?</p>
@@ -70,16 +58,28 @@ function Messages() {
                             <li class="main-message">
                                 <span>Brandon</span>
                                 <p>How are you doing today?</p>
+                            </li>                                             
+                            <li class="main-message">
+                                <span>Brandon</span>
+                                <p>How are you doing today?</p>
                             </li>
                             <li class="secondary-message">
                                 <span>Kristen</span>
                                 <p>Pretty Good</p>
-                            </li>                                                    
+                            </li>
+                            <li class="main-message">
+                                <span>Brandon</span>
+                                <p>How are you doing today?</p>
+                            </li>                            
+                            <li class="main-message">
+                                <span>Brandon</span>
+                                <p>How are you doing today?</p>
+                            </li>                                             
                         </ul>
-                    </div>
-                    <div class="input-message-container">
-                        <input placeholder={"Send Message..."}/>
-                        <button>Send</button>
+                        <div class="input-message-container">
+                            <input placeholder={"Send Message..."}/>
+                            <button>Send</button>
+                        </div>
                     </div>
                 </div>
             </div>
