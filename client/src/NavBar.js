@@ -21,6 +21,13 @@ function NavBar(){
     const [darkMode, setDarkMode] = useState(true)
     const [filterActive, setFilterActive] = useState(false)
 
+
+    // function colorMode() {
+    //     // return setDarkMode(!darkMode)
+    //     document.body.classList.toggle("dark-mode")
+        
+    // }
+
     return(
         <div class="navbar-wrapper">
             <div class="navbar-container">
@@ -30,7 +37,16 @@ function NavBar(){
                     <NavLink to={"/create"}><FontAwesomeIcon icon={faPlusCircle} size='xl'/><span>Create</span></NavLink>
                     <NavLink to={"/messages"}><FontAwesomeIcon icon={faMessage} size='xl'/><span>Messages</span></NavLink>  
                     <NavLink to={"/profile"}><FontAwesomeIcon icon={faCircleUser} size='xl'/><span>Profile</span></NavLink>
-                    {darkMode ? <button class={"lightMode"} onClick={() => setDarkMode(!darkMode)}><FontAwesomeIcon icon={faSun} size='xl'/><span>Light Mode</span></button> : <button class={"darkMode"} onClick={() => setDarkMode(!darkMode)} ><FontAwesomeIcon icon={faMoon} size='xl'/><span>Dark Mode</span></button>}
+                    {darkMode ?
+                    <button onClick={() => {
+                        document.body.classList.toggle("dark-mode")
+                        setDarkMode(!darkMode)
+                    }}><FontAwesomeIcon icon={faSun} size='xl'/><span>Light Mode</span></button> :
+                    <button onClick={() => {
+                        document.body.classList.toggle("dark-mode")
+                        setDarkMode(!darkMode)
+                    }} ><FontAwesomeIcon icon={faMoon} size='xl'/><span>Dark Mode</span></button>
+                    }
                     <div class="filter-container">   
                         <button class="filter-button" onClick={() => {setFilterActive(!filterActive)}}><FontAwesomeIcon icon={faFilter} size='xl'/><span>Filter</span><span class={`${filterActive ? "filter-down-active" : "filter-down-inactive"}`}><FontAwesomeIcon icon={faAngleDown} /></span><span class={`${filterActive ? "filter-up-active" : "filter-up-inactive"}`}><FontAwesomeIcon icon={faAngleUp} /></span></button>
                         <ul class={`filter-list ${filterActive ? "menu-active" : "menu-inactive"}`}>
