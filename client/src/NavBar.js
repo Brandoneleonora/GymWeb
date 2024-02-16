@@ -17,24 +17,19 @@ import { faMoon } from '@fortawesome/free-solid-svg-icons'
 
 
 
-function NavBar(){
+function NavBar({setCreateModal, createModal}){
     const [darkMode, setDarkMode] = useState(true)
     const [filterActive, setFilterActive] = useState(false)
 
 
-    // function colorMode() {
-    //     // return setDarkMode(!darkMode)
-    //     document.body.classList.toggle("dark-mode")
-        
-    // }
-
     return(
+        
         <div class="navbar-wrapper">
             <div class="navbar-container">
                 <div class="top-navbar">
                     <NavLink to={'/'}><span>Gym</span><span>Eco.</span><span><FontAwesomeIcon icon={faG}/></span><span><FontAwesomeIcon icon={faE}/></span></NavLink>
                     <NavLink to={"/"}><FontAwesomeIcon icon={faHouse} size='xl'/><span>Home</span></NavLink>
-                    <NavLink to={"/create"}><FontAwesomeIcon icon={faPlusCircle} size='xl'/><span>Create</span></NavLink>
+                    <button onClick={()=>{setCreateModal(!createModal)}}><FontAwesomeIcon icon={faPlusCircle} size='xl'/><span>Create</span></button>
                     <NavLink to={"/messages"}><FontAwesomeIcon icon={faMessage} size='xl'/><span>Messages</span></NavLink>  
                     <NavLink to={"/profile"}><FontAwesomeIcon icon={faCircleUser} size='xl'/><span>Profile</span></NavLink>
                     {darkMode ?

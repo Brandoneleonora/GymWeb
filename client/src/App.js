@@ -6,7 +6,6 @@ import Home from "./Home";
 import LogIn from "./LogIn";
 import Profile from "./Profile";
 import Messages from "./Messages";
-import Create from "./Create";
 
 
 
@@ -16,6 +15,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [allPost, setAllPost] = useState(null)
   const navigate = useNavigate()
+
 
   useEffect(() => {
     (async () => {
@@ -62,7 +62,6 @@ function App() {
         <Route path="profile" element={<Profile user={user} setlogged={setLoggedIn} post={allPost}/>}/>
         <Route path='login' element={<LogIn setUser={setUser} setlogged={setLoggedIn} />}/>
         <Route path="signup" element={<SignUp setuser={setUser} setlogged={setLoggedIn}/>}/>
-        <Route path="create" element={<Create user={user} />}/>
         <Route path="messages" element={<Messages/>}/>
       </Routes>
     </main>
