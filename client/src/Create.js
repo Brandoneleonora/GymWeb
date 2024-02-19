@@ -41,19 +41,24 @@ function Create({ user, createModal, setCreateModal }){
                 <div class="create-header">
                 {image ? null : <button class="back_button" onClick={backButton}>Back</button>}
                     <h3>Share A Memory</h3>
-                    {image ? null : <button class="foward_button">Next</button>}
+                {image ? null : <button class="create_post" >Post</button>}
                 </div>
                 <div class="create-bottom">
-                    <div class="bottom-default">
+                    <div class={`${image ? "bottom-default" : "bottom-image"}`}>
                         <input type="file" id="file" name="file"  accept="image/*" onChange={previewImage} hidden/>
                         {image ? <img id="previewImage" src="#" alt="previewImage" hidden/> : <img id="previewImage" src="#" alt="previewImage"/> }
+                        {!image && <div class="right-container">
+                        <textarea class={"caption_holder"} placeholder="Caption Here..."></textarea>
+                        </div>}    
                         <div class="create_default">
                             {image && <span><FontAwesomeIcon icon={faImage} size='xl' /></span>}
                             {image && <label for="file">Check Files</label>}
-                        </div>    
+                        </div>
+                        
                     </div>    
                 </div>
-            </div>
+                
+            </div>   
         </div>
     )
     }
