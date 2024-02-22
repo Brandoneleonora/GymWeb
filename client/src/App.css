@@ -286,26 +286,30 @@ body.active-modal {
 }
 
 .filter-list{
-    --menu-Y: 1rem;
+    --menu-Y: 2.75rem;
     list-style:none;
     display:flex;
     flex-direction: column;
     gap: 0.25rem;
     position: absolute;
-    top: 1;
-    right: 100px;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto
 }
 
 
 .filter-list.menu-active {
     opacity: 1;
+    z-index: 1;
     transform: translateY(var(--menu-Y));
     transition: 0.3s ease;
 }
 
 .filter-list.menu-inactive {
     opacity: 0;
-    transform: translateY(calc(var(--menu-Y) * -1));
+    z-index: -1;
+    transform: translateY(calc(var(--menu-Y) - 1rem));
     transition: 0.3s ease;
 }
 
@@ -439,7 +443,7 @@ body.active-modal {
     background-color: rgba(0,0,0,0.7);
     height: 100%;
     width: 100%;
-    z-index: 1;
+    z-index: 20;
 }
 
 .create-container {
@@ -454,6 +458,76 @@ body.active-modal {
 .right-container {
     background: var(--primary-color);
     height: 100%;
+    width: 100%;
+    border-bottom-right-radius: 5px;
+}
+
+.filter-create {
+    height: 50%;
+    width: 100%;
+    position: relative;
+    
+}
+
+.filter-create button {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+    background: none;
+}
+
+.filter-create button span,
+.filter-create button {
+    cursor: pointer;
+    color:var(--text-color)
+}
+
+.create-filter-list{
+    --menu-Y: 2rem;
+    list-style:none;
+    display:flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto
+}
+
+
+.create-filter-list.menu-active {
+    opacity: 1;
+    z-index: 1;
+    transform: translateY(var(--menu-Y));
+    transition: 0.3s ease;
+}
+
+.create-filter-list.menu-inactive {
+    opacity: 0;
+    z-index: -1;
+    transform: translateY(calc(var(--menu-Y) - 1rem));
+    transition: 0.3s ease;
+}
+
+
+.filter-create ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.right-container li {
+    cursor:pointer;
+    padding: .25rem;
+    list-style: none;
+    color: var(--text-color)
+}
+
+.create-filter-list li:hover {
+    background:rgba(138, 134, 134, 0.4)
 }
 
 
@@ -591,8 +665,7 @@ body.active-modal {
     width: 100%;
     max-width: 400px;
     object-fit: cover;
-    border-bottom-left-radius:5px ;
-    border-bottom-right-radius:5px ;
+    border-bottom-left-radius:5px ; 
 }
 
 

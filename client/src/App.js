@@ -6,6 +6,7 @@ import Home from "./Home";
 import LogIn from "./LogIn";
 import Profile from "./Profile";
 import Messages from "./Messages";
+import Create from "./Create";
 
 
 
@@ -14,6 +15,7 @@ function App() {
   const [user, setUser] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
   const [allPost, setAllPost] = useState(null)
+  const [createModal, setCreateModal] = useState(false)
   const navigate = useNavigate()
 
 
@@ -57,12 +59,13 @@ function App() {
   
   return (
     <main>
+      {createModal ? <Create createModal={createModal} setCreateModal={setCreateModal}/> : null}
       <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="profile" element={<Profile user={user} setlogged={setLoggedIn} post={allPost}/>}/>
+        <Route path="/" element={<Home createModal={createModal} setCreateModal={setCreateModal}/>}/>
+        <Route path="profile" element={<Profile user={user} setlogged={setLoggedIn} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
         <Route path='login' element={<LogIn setUser={setUser} setlogged={setLoggedIn} />}/>
         <Route path="signup" element={<SignUp setuser={setUser} setlogged={setLoggedIn}/>}/>
-        <Route path="messages" element={<Messages/>}/>
+        <Route path="messages" element={<Messages createModal={createModal} setCreateModal={setCreateModal}/>}/>
       </Routes>
     </main>
    

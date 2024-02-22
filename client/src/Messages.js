@@ -3,10 +3,10 @@ import NavBar from "./NavBar";
 import blank from "./white.jpg"
 import blackblank from "./black.jpg"
 
-function Messages() {
+function Messages({createModal, setCreateModal}) {
     return(
         <div class="messages-wrapper">
-            <NavBar/>
+            <NavBar createModal={createModal} setCreateModal={setCreateModal}/>
             <div class="messages-container">
                 <div class='people-container'>
                     <ul>

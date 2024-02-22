@@ -10,7 +10,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 
 
-function Profile({ user, setlogged, post }){
+function Profile({ user, setlogged, post, createModal, setCreateModal }){
     const navigate = useNavigate()
     const [profilePhotos, setProfilePhotos] = useState(post.filter(p => user.id === p.user_id))
     const [showModal, setShowModal] = useState(false)
@@ -42,7 +42,7 @@ function Profile({ user, setlogged, post }){
 
     return(
         <div class="profile-wrapper">
-            <NavBar/>
+            <NavBar createModal={createModal} setCreateModal={setCreateModal}/>
             {showModal && <ProfileModal setShowModal={setShowModal} showModal={showModal}/>}
             <div class="profile-container">
                 <div class="image-container">
