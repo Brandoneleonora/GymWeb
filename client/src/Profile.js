@@ -14,6 +14,7 @@ function Profile({ user, setlogged, post, createModal, setCreateModal }){
     const navigate = useNavigate()
     const [profilePhotos, setProfilePhotos] = useState(post.filter(p => user.id === p.user_id))
     const [showModal, setShowModal] = useState(false)
+    const [backgroundSrc, setBackgroundSrc] = useState(landscape)
 
     console.log(profilePhotos)
 
@@ -27,17 +28,19 @@ function Profile({ user, setlogged, post, createModal, setCreateModal }){
         })
     }
 
-    const handleEditProfile = () =>{
-        setShowModal(!showModal)
+    
+    const changeBackroundImage = (event) => {
+        const file = event.target.files[0]
+
+        if (file) {
+            const fileReader = new FileReader()
+            fileReader.onload = () => {
+                setBackgroundSrc(fileReader.result)
+            }
+            fileReader.readAsDataURL(file)
+        }
+
     }
-
-    if (showModal) {
-        document.body.classList.add("active-modal")
-    }else{
-        document.body.classList.remove("active-modal")
-    }
-
-
 
 
     return(
@@ -46,8 +49,9 @@ function Profile({ user, setlogged, post, createModal, setCreateModal }){
             {showModal && <ProfileModal setShowModal={setShowModal} showModal={showModal}/>}
             <div class="profile-container">
                 <div class="image-container">
-                    <img src={landscape}/>
-                    <button><span><FontAwesomeIcon icon={faImage} /><span>Edit Image</span></span></button>
+                    <img src={backgroundSrc}/>
+                    <input type="file" id="file" name="file"  accept="image/*" onChange={changeBackroundImage} onClick={event => event.target.value = null} hidden/>
+                    <label for="file"><span><FontAwesomeIcon icon={faImage} /><span>Choose Image</span></span></label>
                 </div>
                 <div class="bottom-container">
                     <div class="person-container">
@@ -76,7 +80,7 @@ function Profile({ user, setlogged, post, createModal, setCreateModal }){
                                 <li><span>Liked </span></li>
                                 <li><span>Edit Profile</span></li>
                             </ul>
-                            <button>Log Out</button>
+                            <button onClick={handleLogOut}>Log Out</button>
                         </div>
                         <div class="profile-images">
                             <ul>

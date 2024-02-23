@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
@@ -17,9 +17,17 @@ import { faMoon } from '@fortawesome/free-solid-svg-icons'
 
 
 
-function NavBar({setCreateModal, createModal}){
+function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
     const [darkMode, setDarkMode] = useState(true)
     const [filterActive, setFilterActive] = useState(false)
+    const navigate = useNavigate()
+
+
+    const changeFilter = (e) => {
+        setFilterNav(e.target.innerHTML)
+        setFilterActive(!filterActive)
+    }
+
 
 
     return(
@@ -43,10 +51,10 @@ function NavBar({setCreateModal, createModal}){
                     }} ><FontAwesomeIcon icon={faMoon} size='xl'/><span>Dark Mode</span></button>
                     }
                     <div class="filter-container">   
-                        <button class="filter-button" onClick={() => {setFilterActive(!filterActive)}}><FontAwesomeIcon icon={faFilter} size='xl'/><span>Filter</span><span class={`${filterActive ? "filter-down-active" : "filter-down-inactive"}`}><FontAwesomeIcon icon={faAngleDown} /></span><span class={`${filterActive ? "filter-up-active" : "filter-up-inactive"}`}><FontAwesomeIcon icon={faAngleUp} /></span></button>
-                        <ul class={`filter-list ${filterActive ? "menu-active" : "menu-inactive"}`}>
+                        <button class="filter-button" onClick={() => {setFilterActive(!filterActive)}}><FontAwesomeIcon icon={faFilter} size='xl'/><span>{filterNav}</span>{filterActive ? <span><FontAwesomeIcon icon={faAngleUp} /></span> : <span><FontAwesomeIcon icon={faAngleDown} /></span>}</button>
+                        <ul class={`filter-list ${filterActive ? "menu-active" : "menu-inactive"}`} onClick={changeFilter}>
                             <li>BodyBuilding</li>
-                            <li>Powerlifting</li>
+                            <li>Powerlifter</li>
                             <li>CrossFit</li>
                             <li>Powerbuilder</li>
                             <li>Strongman</li>
@@ -55,7 +63,7 @@ function NavBar({setCreateModal, createModal}){
                     </div>
                 </div>
                 <div class="bottom-navbar">
-                    <button><FontAwesomeIcon icon={faArrowRightFromBracket} size="xl" /><span>Logout</span></button>
+                    <button onClick={() => navigate("/login")}><FontAwesomeIcon icon={faArrowRightFromBracket} size="xl" /><span>Logout</span></button>
                     <button><FontAwesomeIcon icon={faBars} size={"xl"}/><span>Other</span></button>
                 </div>
             </div>

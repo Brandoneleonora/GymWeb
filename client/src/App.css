@@ -265,19 +265,12 @@ body.active-modal {
     position: relative;
 }
 
-.filter-down-inactive,
-.filter-up-active  {
+.filter-button span:nth-child(3) {
     opacity: 1;
     position: absolute;
     right: 10%;
 }
 
-.filter-down-active,
-.filter-up-inactive {
-    opacity: 0;
-    position: absolute;
-    right: 10%;
-}
 
 .filter-container{
     width: 100%;
@@ -286,7 +279,7 @@ body.active-modal {
 }
 
 .filter-list{
-    --menu-Y: 2.75rem;
+    --menu-Y: 3rem;
     list-style:none;
     display:flex;
     flex-direction: column;
@@ -959,7 +952,7 @@ body.active-modal {
     height: 100%;
 }
 
-.image-container button {
+.image-container label {
     right: 0;
     top: 0;
     margin: 2rem 2rem 0 0;
@@ -971,12 +964,12 @@ body.active-modal {
     cursor: pointer
 }
 
-.image-container button span:nth-child(1):hover {
+.image-container label span:nth-child(1):hover {
     opacity: .7;
 }
 
 
-.image-container button span {
+.image-container label span {
     margin-left: .5rem;
 }
 

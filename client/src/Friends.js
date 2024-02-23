@@ -1,7 +1,7 @@
 import React from "react"
 import blank from "./white.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
 function Suggest_Friends(){
     return(
@@ -20,7 +20,7 @@ function Suggest_Friends(){
                             <h3>Brandon Eleonora</h3>
                             <p>10 Mutual Friends</p>
                         </div>
-                        <button><FontAwesomeIcon icon={faUserPlus} size="lg"/></button>
+                        <button><FontAwesomeIcon icon={faMessage} size="xl"/></button>
                     </div>
                 </div>
             </div>
