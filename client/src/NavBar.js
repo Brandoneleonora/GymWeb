@@ -29,6 +29,14 @@ function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
     }
 
 
+    const logout = () => {
+        fetch("/logout")
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                navigate('/login')
+            })
+    }
 
     return(
         
@@ -63,7 +71,7 @@ function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
                     </div>
                 </div>
                 <div class="bottom-navbar">
-                    <button onClick={() => navigate("/login")}><FontAwesomeIcon icon={faArrowRightFromBracket} size="xl" /><span>Logout</span></button>
+                    <button onClick={logout}><FontAwesomeIcon icon={faArrowRightFromBracket} size="xl" /><span>Logout</span></button>
                     <button><FontAwesomeIcon icon={faBars} size={"xl"}/><span>Other</span></button>
                 </div>
             </div>

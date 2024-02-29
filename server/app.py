@@ -1,7 +1,7 @@
 from flask import request, jsonify, session
 from config import app, db, bcrypt
-from models import User, Post, UserSchema, PostSchema
-
+from models import User, Post, Friends, UserSchema, PostSchema, FriendsSchema
+from werkzeug.utils import secure_filename
 app.secret_key = b'\xd5e\xc5M\x9fS\x81~U\xa8x\xc2\xec@r\x84'
 
 #Masrshmallow Schemmas
@@ -10,6 +10,11 @@ users_schema = UserSchema(many=True)
 
 post_schema = PostSchema()
 posts_schema = PostSchema(many=True)
+
+friend_schema = FriendsSchema()
+friends_schema = FriendsSchema(many=True)
+
+
 
 
 @app.route('/signup', methods = ['POST'])
@@ -27,7 +32,14 @@ def sign_up():
             data['first_name'],
             data['last_name'],
             data['username'],
-            bcrypt.generate_password_hash(data['password'])
+            bcrypt.generate_password_hash(data['password']),
+            data['followers'],
+            data['following'],
+            data['bio'],
+            data['email'],
+            data['lift_type'],
+            data['background_image'],
+            data['profile_picture']
             )
 
             session['user'] = data['username']
@@ -55,11 +67,16 @@ def log_in():
         else:
             return jsonify({"login": "unsuccesful"}), 400
 
+
+
 @app.route("/logout", methods=["GET"])
 def logout():
     if request.method == 'GET':
         session.pop("user", None)
         return jsonify("logged out"), 200
+
+
+
 
 @app.route("/checksession", methods=['GET'])
 def check_session():
@@ -69,37 +86,25 @@ def check_session():
             return user_schema.jsonify(user), 200
         else:
             return jsonify("need to sign in"), 400
-        
-@app.route('/', methods=['GET'])
+
+
+
+@app.route('/home', methods=['GET'])
 def home():
-    if request.method == 'GET':
-       users = User.query.all()
-       return jsonify(users_schema.dump(users)), 200
 
-
-@app.route('/posts/<string:postFilter>', methods = ['POST', 'GET'])
-def allPosts(postFilter):
-
-    if request.method == 'GET' and postFilter.lower() == 'all':
+    if request.method == 'GET' :
         posts = Post.query.all()
         return jsonify(posts_schema.dump(posts)), 200
-    elif request.method =='GET' and postFilter.lower() == 'powerlifter':
-        posts = Post.query.filter_by(post_type = postFilter.lower()).all()
-        return jsonify(posts_schema.dump(posts)), 200
-    elif request.method =='GET' and postFilter.lower() == 'powerbuilder':
-        posts = Post.query.filter_by(post_type = postFilter.lower()).all()
-        return jsonify(posts_schema.dump(posts)), 200
-    elif request.method =='GET' and postFilter.lower() == 'bodybuilder':
-        posts = Post.query.filter_by(post_type = postFilter.lower()).all()
-        return jsonify(posts_schema.dump(posts)), 200
-    elif request.method =='GET' and postFilter.lower() == 'crossfit':
-        posts = Post.query.filter_by(post_type = postFilter.lower()).all()
-        return jsonify(posts_schema.dump(posts)), 200
-    elif request.method =='GET' and postFilter.lower() == 'workingout':
-        posts = Post.query.filter_by(post_type = postFilter.lower()).all()
-        return jsonify(posts_schema.dump(posts)), 200
 
-    elif request.method == 'POST':
+
+
+
+
+@app.route('/posts', methods = ['POST'])
+def allPosts():
+
+
+    if request.method == 'POST':
         data = request.get_json()
 
         new_post = Post(
@@ -115,13 +120,16 @@ def allPosts(postFilter):
 
         return post_schema.jsonify(new_post), 200
 
+
+
+
+
 @app.route('/profile/<string:username>', methods=['GET', 'PATCH'])
 def user_profile(username):
     user = User.query.filter(User.username == username).first()
     
     if request.method == 'GET':
         return user_schema.jsonify(user), 200
-
     elif request.method == 'PATCH':
         data = request.get_json()
         errors = user_schema.validate(data)
@@ -136,9 +144,43 @@ def user_profile(username):
             user.last_name = data['last_name']
         elif 'password' in data:
             user.password = bcrypt.generate_password_hash(data['password'])
+        elif 'followers' in data:
+            user.followers = data['followers']
+        elif 'following' in data:
+            user.following = data['following']
+        elif 'bio' in data:
+            user.bio = data['bio']
+        elif 'lift_type' in data:
+            user.lift_type = data['lift_type']
+        elif 'email' in data:
+            user.email = data['email']
 
         db.session.commit()
         return user_schema.jsonify(user)
+
+
+
+
+@app.route('/<string:username>/friends', methods=['GET', 'POST'])
+def friends(username):
+    user = User.query.filter(User.username == username).first()
+
+    if request.method == "GET":
+        return friends_schema.jsonify(user.friends), 200
+        
+
+    if request.method == 'POST':
+        data = request.get_json()
+
+        new_friend = Friends(
+            data['user_id'],
+            data["name"]
+            )
+
+        db.session.add(new_friend)
+        db.session.commit()
+
+        return friend_schema.jsonify(new_friend), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

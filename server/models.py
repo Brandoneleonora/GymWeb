@@ -10,34 +10,31 @@ class User(db.Model):
     last_name = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
+    followers = db.Column(db.Integer)
+    following = db.Column(db.Integer)
+    bio = db.Column(db.String)
+    lift_type = db.Column(db.String)
+    email = db.Column(db.String)
+    background_image = db.Column(db.String)
+    profile_picture = db.Column(db.String)
 
     #Relationships
     posts = db.relationship('Post', backref='user')
+    friends = db.relationship('Friends', backref="user")
 
-    def __init__(self, first_name, last_name, username, password):
+    def __init__(self, first_name, last_name, username, password, followers, following, bio, lift_type, email, background_image, profile_picture):
         self.first_name = first_name
         self.last_name = last_name
         self.username = username
         self.password = password
+        self.followers = followers
+        self.following = following
+        self.bio = bio 
+        self.lift_type = lift_type
+        self.email = email
+        self.background_image = background_image
+        self.profile_picture = profile_picture
 
-class Post(db.Model):
-    __tablename__ = 'posts'
-
-    id = db.Column(db.Integer, primary_key=True)
-    post_username = db.Column(db.String)
-    post_type = db.Column(db.String, nullable=False)
-    body = db.Column(db.String, nullable=False)
-    image = db.Column(db.String)
-
-    #Relationships
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-    def __init__(self, post_type, body, user_id, post_username, image):
-        self.post_type = post_type
-        self.body = body
-        self.user_id = user_id
-        self.post_username = post_username
-        self.image = image
 
 #Marshmallow Schemas for the models
 class UserSchema(ma.SQLAlchemySchema):
@@ -89,9 +86,51 @@ class UserSchema(ma.SQLAlchemySchema):
 
 
     class Meta:
-        fields = ("id",'first_name', 'last_name', 'username', 'password')
+        fields = ("id",'first_name', 'last_name', 'username', 'password', "followers", "following", "email", "lift_type", "bio", "background_image", "profile_picture")
+
+
+
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+
+    id = db.Column(db.Integer, primary_key=True)
+    post_username = db.Column(db.String)
+    post_type = db.Column(db.String, nullable=False)
+    body = db.Column(db.String, nullable=False)
+    image = db.Column(db.String)
+
+    #Relationships
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+
+    def __init__(self, post_type, body, user_id, post_username, image):
+        self.post_type = post_type
+        self.body = body
+        self.user_id = user_id
+        self.post_username = post_username
+        self.image = image
 
 
 class PostSchema(ma.SQLAlchemySchema):
     class Meta:
         fields = ('post_type', 'body', 'user_id', 'post_username', "image")
+
+
+class Friends(db.Model):
+    __tablename__ = "friends"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+
+    #Relationships
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __init__(self, user_id, name):
+        self.user_id = user_id
+        self.name = name
+
+
+class FriendsSchema(ma.SQLAlchemySchema):
+    class Meta:
+        fields = ('user_id', 'name')

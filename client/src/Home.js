@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import All_Group from "./All_Group";
 import NavBar from "./NavBar.js"
 
-function Home({createModal, setCreateModal, filterNav, setFilterNav}){
+function Home({createModal, setCreateModal, filterNav, setFilterNav, allPost, setAllPost}){
+
+    
+
+
     return(
         <>
-        <div class={`wrapper ${createModal ? "no_overflow": null}`}> 
+        <div class={`${createModal ? "no_overflow": "wrapper"}`}> 
             <NavBar createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav}/>
-            <All_Group filterNav={filterNav}/>
+            <All_Group filterNav={filterNav} allPost={allPost} setAllPost={setAllPost}/>
         </div>
         </>
         

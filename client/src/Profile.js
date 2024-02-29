@@ -12,11 +12,12 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 function Profile({ user, setlogged, post, createModal, setCreateModal }){
     const navigate = useNavigate()
-    const [profilePhotos, setProfilePhotos] = useState(post.filter(p => user.id === p.user_id))
+    const profilePhotos = post.filter(p => user.id === p.user_id)
     const [showModal, setShowModal] = useState(false)
-    const [backgroundSrc, setBackgroundSrc] = useState(landscape)
+    const [backgroundSrc, setBackgroundSrc] = useState(user.background_image)
+    const [profileSrc, setProfileSrc] = useState(user.profile_picture)
 
-    console.log(profilePhotos)
+    console.log(profileSrc)
 
     function handleLogOut(){
         fetch('/logout')
@@ -42,7 +43,6 @@ function Profile({ user, setlogged, post, createModal, setCreateModal }){
 
     }
 
-
     return(
         <div class="profile-wrapper">
             <NavBar createModal={createModal} setCreateModal={setCreateModal}/>
@@ -55,16 +55,16 @@ function Profile({ user, setlogged, post, createModal, setCreateModal }){
                 </div>
                 <div class="bottom-container">
                     <div class="person-container">
-                        <img src={profile}/>
+                        <img src={profileSrc}/>
                         <div class="about-container">
-                            <h2>Brandon Eleonora</h2>
-                            <p>Software Engineer</p>
-                            <p>brandoneleonora38@gmail.com</p>
+                            <h2>{user.username}</h2>
+                            <p>{user.lift_type}</p>
+                            <p>{user.email}</p>
                         </div>
                         <ul class="numbers-container">
-                            <li><span>5,233</span><span>Followers</span></li>
-                            <li><span>23,324</span><span>Following</span></li>
-                            <li><span>9</span><span>Posts</span></li>
+                            <li><span>{user.followers}</span><span>Followers</span></li>
+                            <li><span>{user.following}</span><span>Following</span></li>
+                            <li><span>{profilePhotos.length}</span><span>Posts</span></li>
                         </ul>
                         <div class="bio-container">
                             <p>Bio</p>
