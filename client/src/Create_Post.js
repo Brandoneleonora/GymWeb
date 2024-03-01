@@ -1,17 +1,16 @@
 import React from "react"
-import blank from "./black.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 import { faVideo } from '@fortawesome/free-solid-svg-icons'
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons'
 
-function Create_Post() {
+function Create_Post({ user }) {
     return(
         <div class="create_post_wrapper">
             <div class="create_post_container">
                 <div class="create_post_header">
                     <div>
-                        <img src={blank}/>
+                        <img src={user.profile_picture}/>
                     </div>
                     <div>
                         <input placeholder="What's on your mind?"/>

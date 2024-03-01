@@ -130,6 +130,7 @@ def user_profile(username):
     
     if request.method == 'GET':
         return user_schema.jsonify(user), 200
+        
     elif request.method == 'PATCH':
         data = request.get_json()
         errors = user_schema.validate(data)
@@ -154,6 +155,10 @@ def user_profile(username):
             user.lift_type = data['lift_type']
         elif 'email' in data:
             user.email = data['email']
+        elif 'background_image' in data:
+            user.background_image = data['background_image']
+        elif 'profile_picture' in data:
+            user.profile_picture = data['profile_picture']
 
         db.session.commit()
         return user_schema.jsonify(user)
@@ -164,9 +169,13 @@ def user_profile(username):
 @app.route('/<string:username>/friends', methods=['GET', 'POST'])
 def friends(username):
     user = User.query.filter(User.username == username).first()
+    friends = []
 
     if request.method == "GET":
-        return friends_schema.jsonify(user.friends), 200
+        for friend in user.friends:
+            friends.append(User.query.filter(User.username == friend.name).first())
+
+        return users_schema.jsonify(friends), 200
         
 
     if request.method == 'POST':
@@ -181,6 +190,10 @@ def friends(username):
         db.session.commit()
 
         return friend_schema.jsonify(new_friend), 200
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

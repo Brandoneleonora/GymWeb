@@ -1,9 +1,20 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import blank from "./white.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
-function Suggest_Friends(){
+function Suggest_Friends({ user }){
+    const [friends, setFriends] = useState([])
+
+
+    useEffect(() => {
+        fetch(`/${user.username}/friends`)
+            .then(res => res.json())
+            .then(data => setFriends(data))
+    }, [])
+   
+    console.log(friends)
+
     return(
         <div class="content-wrapper">
             <div class="content-container">
@@ -11,17 +22,23 @@ function Suggest_Friends(){
                     <h4>Friends</h4>
                     <button>See All</button>
                 </div>
+                <input type="search" placeholder="Search..."/>
                 <div class="friend_wrapper">
-                    <div class="wrapper_header">
-                        <div>
-                            <img src={blank}/>
-                        </div>
-                        <div>
-                            <h3>Brandon Eleonora</h3>
-                            <p>10 Mutual Friends</p>
-                        </div>
-                        <button><FontAwesomeIcon icon={faMessage} size="xl"/></button>
-                    </div>
+                    <ul class="wrapper_header">
+                        {friends && friends.map(friend =>{
+                            return(
+                                <li>
+                                    <div>
+                                        <img src={friend.profile_picture}/>
+                                        <h3>{friend.username}</h3>
+                                        <button><FontAwesomeIcon icon={faMessage} size="xl"/></button>
+                                    </div>
+                                </li>
+                            )
+                        })}
+                        
+                        
+                    </ul>
                 </div>
             </div>
         </div>

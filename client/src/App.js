@@ -61,8 +61,8 @@ function App() {
     <main>
       {createModal ? <Create createModal={createModal} setCreateModal={setCreateModal}/> : null}
       <Routes>
-        <Route path="/" element={<Home createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav} allPost={allPost} setAllPost={setAllPost}/>}/>
-        <Route path="profile" element={<Profile user={user} setlogged={setLoggedIn} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
+        <Route path="/" element={<Home user={user} createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav} allPost={allPost} setAllPost={setAllPost}/>}/>
+        <Route path="profile" element={<Profile setUser={setUser} user={user} setlogged={setLoggedIn} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
         <Route path='login' element={<LogIn setUser={setUser} setlogged={setLoggedIn} />}/>
         <Route path="signup" element={<SignUp setUser={setUser} setlogged={setLoggedIn}/>}/>
         <Route path="messages" element={<Messages createModal={createModal} setCreateModal={setCreateModal}/>}/>

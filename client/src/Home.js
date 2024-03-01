@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import All_Group from "./All_Group";
 import NavBar from "./NavBar.js"
 
-function Home({createModal, setCreateModal, filterNav, setFilterNav, allPost, setAllPost}){
+function Home({user, createModal, setCreateModal, filterNav, setFilterNav, allPost, setAllPost}){
 
     
 
@@ -11,7 +11,7 @@ function Home({createModal, setCreateModal, filterNav, setFilterNav, allPost, se
         <>
         <div class={`${createModal ? "no_overflow": "wrapper"}`}> 
             <NavBar createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav}/>
-            <All_Group filterNav={filterNav} allPost={allPost} setAllPost={setAllPost}/>
+            <All_Group user={user} filterNav={filterNav} allPost={allPost} setAllPost={setAllPost}/>
         </div>
         </>
         
