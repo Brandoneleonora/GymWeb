@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react"
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 
 function Search() {
+    const [searchList, setSearchList] = useState(false)
     const [query, setQuery] = useState('')
     const [users, setUsers] = useState([])
-    const [searchList, setSearchList] = useState(false)
 
     useEffect(() => {
         fetch("users")
@@ -24,18 +25,30 @@ function Search() {
 
 
     const showList = () => {
-        return setSearchList(!searchList)
+        if (searchList === false){
+            setSearchList(!searchList)
+        }     
     }
-    console.log(searchList)
+
+    const dontShowList = () => {
+        if (searchList === true){
+            setSearchList(!searchList)
+            setQuery('')
+        }     
+    }
+
 
     return(
         <>
-        <div class="friendFinderWrapper">
-            <input onClick={showList} value={query} onChange={e => setQuery(e.target.value)} class='friendFinder' type="search" placeholder="Search..."/>
+        <div class="friendFinderWrapper" onClick={e => console.log(e.target)}>
+            <div class="friendInputWrapper">
+                <input onClick={showList} value={query} onChange={e => setQuery(e.target.value)} class='friendFinder' type="text" placeholder="Search..."/>
+                <button onClick={dontShowList}><FontAwesomeIcon icon={faXmark} size="xl"/></button>
+            </div>    
             {searchList && <ul class="friendFinderList">
                 {filteredUsers && filteredUsers.map(user =>{
                     return(
-                        <li>
+                        <li class={"eachFriend"}>
                             <div>
                                 <img src={user.profile_picture}/>
                                 <h3>{user.username}</h3>

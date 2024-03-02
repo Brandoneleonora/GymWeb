@@ -39,8 +39,8 @@ function Suggest_Friends({  user  }){
                                     <div>
                                         <img src={friend.profile_picture}/>
                                         <h3>{friend.username}</h3>
-                                        <button><FontAwesomeIcon icon={faMessage} size="xl"/></button>
                                     </div>
+                                    <button><FontAwesomeIcon icon={faMessage} size="xl"/></button>
                                 </li>
                             )
                         })}

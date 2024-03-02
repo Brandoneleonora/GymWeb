@@ -30,7 +30,7 @@ function Create({ user, createModal, setCreateModal }){
     }
 
 
-    const backButton = (e) => {
+    const backButton = () => {
         const input = document.getElementById("file")
 
         if (input.files) {

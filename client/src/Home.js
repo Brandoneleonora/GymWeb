@@ -4,6 +4,8 @@ import NavBar from "./NavBar.js"
 import Search from "./Search.js";
 
 function Home({user, createModal, setCreateModal, filterNav, setFilterNav, allPost, setAllPost}){
+
+
     return(
         <>
             <div class={`${createModal ? "no_overflow": "wrapper"}`}> 

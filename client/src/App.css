@@ -427,6 +427,18 @@ body.active-modal {
 
 /*Seach*/
 
+@media (width < 900px){
+    .friendFinderWrapper {
+        width: 500px;
+    }
+}
+
+@media (width < 770){
+    .friendFinderWrapper {
+        margin: 0 auto 0;
+    }
+}
+
 .friendFinderList li{
     display: flex;
     justify-content: space-between;
@@ -463,14 +475,26 @@ body.active-modal {
     border-radius: 5px;
     height: fit-content;
     max-height:375px;
-    width: 700px;
+    max-width: 700px;
     top: 0;
     left: 0;
     right: 0;
-    margin: 1rem auto 0;
+    margin: 0 auto;
     z-index: 2;
     position: absolute;
     overflow: hidden;
+}
+
+.friendInputWrapper{
+    display: flex;
+    padding: 0 1rem;
+    align-items: center;
+}
+
+.friendInputWrapper button{
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .friendFinder {
@@ -776,7 +800,7 @@ body.active-modal {
 .create_post_header div:nth-child(2) input{
     border: none;
     width: 100%;
-    background:rgba(134, 124, 124, 0.205);
+    background:#ffffff;
     padding: 1rem;
     border-radius: 30vh;
 }
@@ -1355,7 +1379,7 @@ body.active-modal {
  .content-container input {
     border: none;
     margin: .5rem  0;
-    background: rgba(134, 124, 124, 0.151);
+    background: #ffffff;
     padding: .75rem;
     border-radius: 5px;
     width: 100%;
@@ -1397,6 +1421,7 @@ body.active-modal {
     padding: .75rem 0;
     list-style: none;
     display: flex;
+    align-items: center;
 }
 
 .wrapper_header button {
@@ -1417,7 +1442,6 @@ body.active-modal {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .wrapper_header div:nth-child(1) img{
@@ -1425,6 +1449,7 @@ body.active-modal {
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     cursor: pointer;
+    margin-right: 0.75rem;
 }
 
 .wrapper_header div h3 {
