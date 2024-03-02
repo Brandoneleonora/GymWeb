@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import blank from "./white.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
-function Suggest_Friends({ user }){
+function Suggest_Friends({  user  }){
+    const [query, setQuery] = useState('')
     const [friends, setFriends] = useState([])
 
 
@@ -12,20 +13,27 @@ function Suggest_Friends({ user }){
             .then(res => res.json())
             .then(data => setFriends(data))
     }, [])
-   
-    console.log(friends)
+
+    const filteredFriends = useMemo(() => {
+        return friends.filter(friend => {
+            if (friend.username){
+                return friend.username.toLowerCase().includes(query.toLowerCase())
+            }
+        
+    })
+    }, [friends, query])
+
 
     return(
         <div class="content-wrapper">
             <div class="content-container">
                 <div class="friend_header">
                     <h4>Friends</h4>
-                    <button>See All</button>
                 </div>
-                <input type="search" placeholder="Search..."/>
+                <input value={query} onChange={(e) => setQuery(e.target.value)} type="search" placeholder="Search..."/>
                 <div class="friend_wrapper">
                     <ul class="wrapper_header">
-                        {friends && friends.map(friend =>{
+                        {filteredFriends && filteredFriends.map(friend =>{
                             return(
                                 <li>
                                     <div>

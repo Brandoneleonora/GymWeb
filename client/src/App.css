@@ -415,6 +415,7 @@ body.active-modal {
 
 .wrapper {
     display: flex;
+    position: relative;
 }
 
 .no_overflow {
@@ -423,6 +424,65 @@ body.active-modal {
     overflow-y: hidden;
 }
 
+
+/*Seach*/
+
+.friendFinderList li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+    padding: 0 0.75rem;
+}
+
+.friendFinderList button {
+    background: var(--second-accent-color);
+    color: var(--primary-color);
+    padding: 0.75rem;
+    border-radius: 5px;
+    height: fit-content;
+    border:none;
+}
+
+.friendFinderList div{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.friendFinderList img {
+    width: 50px;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    margin-right: 1rem;
+}
+
+.friendFinderWrapper {
+    background: #ffffff;
+    border-radius: 5px;
+    height: fit-content;
+    max-height:375px;
+    width: 700px;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 1rem auto 0;
+    z-index: 2;
+    position: absolute;
+    overflow: hidden;
+}
+
+.friendFinder {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    background: #ffffff;
+}
+
+.friendFinder:focus {
+    outline:none;
+}
 
 /*Create Css*/
 
@@ -766,9 +826,11 @@ body.active-modal {
 
 
 .post-cont {
-    margin:  3rem auto 0;
+    margin:  5rem auto 0;
     display: flex;
 }
+
+
 
 .post-wrapper {
     max-width: 500px;

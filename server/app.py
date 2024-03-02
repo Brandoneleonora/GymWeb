@@ -121,6 +121,12 @@ def allPosts():
         return post_schema.jsonify(new_post), 200
 
 
+@app.route("/users", methods=['GET'])
+def get_user():
+    users = User.query.all()
+
+    if request.method == 'GET':
+        return users_schema.jsonify(users), 200
 
 
 

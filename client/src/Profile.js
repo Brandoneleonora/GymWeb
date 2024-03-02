@@ -36,7 +36,6 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setUser(data)
             })
         }
@@ -50,51 +49,47 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setUser(data)
             })
         }
-        else if (profileValues.bio !== user.profile_picture){
+        else if (profileValues.bio !== user.bio){
             fetch(`profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
-                    profile_picture: profileValues.profileSrc
+                    bio: profileValues.bio
                 })
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                setUser(data)
-            })
-        }
-
-        else if (profileValues.email !== user.profile_picture){
-            fetch(`profile/${user.username}`, {
-                method: 'PATCH',
-                headers: {"Content-type": 'application/json'},
-                body: JSON.stringify({
-                    profile_picture: profileValues.profileSrc
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
                 setUser(data)
             })
         }
 
-        else if (profileValues.lift_type !== user.profile_picture){
+        else if (profileValues.email !== user.email){
             fetch(`profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
-                    profile_picture: profileValues.profileSrc
+                    email: profileValues.email
                 })
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                setUser(data)
+            })
+        }
+
+        else if (profileValues.lift_type !== user.lift_type){
+            fetch(`profile/${user.username}`, {
+                method: 'PATCH',
+                headers: {"Content-type": 'application/json'},
+                body: JSON.stringify({
+                    lift_type: profileValues.lift_type
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
                 setUser(data)
             })
         }

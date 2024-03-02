@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Post from "./Posts";
 import Suggest_Friends from "./Friends.js";
 import Create_Post from "./Create_Post.js";
 
 function All_Group({filterNav, allPost, setAllPost, user}){
-
+    
     return(
         <div class="post-cont">
             <div class="post-wrapper">
