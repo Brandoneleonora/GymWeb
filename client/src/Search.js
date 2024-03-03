@@ -1,18 +1,29 @@
 import React, { useState, useEffect, useMemo } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import User_Profile from "./UserProfile"
+import { useNavigate } from 'react-router-dom'
 
 
-function Search() {
+
+function Search({ setViewUser }) {
     const [searchList, setSearchList] = useState(false)
     const [query, setQuery] = useState('')
     const [users, setUsers] = useState([])
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         fetch("users")
             .then(res => res.json())
             .then(data => setUsers(data))
     }, [])
+
+    const viewProfile = (user) => {
+        setViewUser(user)
+        navigate('userProfile')
+        
+    }
 
     const filteredUsers = useMemo(() => {
         return users.filter(user => {
@@ -24,36 +35,31 @@ function Search() {
     }, [users, query])
 
 
-    const showList = () => {
-        if (searchList === false){
-            setSearchList(!searchList)
-        }     
+    const showList = (e) => {
+        setQuery(e.target.value)
     }
 
     const dontShowList = () => {
-        if (searchList === true){
-            setSearchList(!searchList)
-            setQuery('')
-        }     
+        setQuery('')
+        setSearchList(false)
     }
-
 
     return(
         <>
         <div class="friendFinderWrapper" onClick={e => console.log(e.target)}>
             <div class="friendInputWrapper">
-                <input onClick={showList} value={query} onChange={e => setQuery(e.target.value)} class='friendFinder' type="text" placeholder="Search..."/>
+                <input value={query} onChange={showList} class='friendFinder' type="text" placeholder="Search..."/>
                 <button onClick={dontShowList}><FontAwesomeIcon icon={faXmark} size="xl"/></button>
             </div>    
-            {searchList && <ul class="friendFinderList">
-                {filteredUsers && filteredUsers.map(user =>{
+            {query && <ul class="friendFinderList">
+                {filteredUsers.map(user =>{
                     return(
                         <li class={"eachFriend"}>
                             <div>
                                 <img src={user.profile_picture}/>
                                 <h3>{user.username}</h3>
                             </div>
-                            <button>View Profile</button>
+                            <button onClick={() => viewProfile(user)}>View Profile</button>
                         </li>
                     )
                 })}

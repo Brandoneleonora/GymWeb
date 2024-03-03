@@ -1,18 +1,27 @@
 import React, { useState, useMemo, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import blank from "./white.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
-function Suggest_Friends({  user  }){
+function Suggest_Friends({  user, setViewUser  }){
     const [query, setQuery] = useState('')
     const [friends, setFriends] = useState([])
-
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(`/${user.username}/friends`)
             .then(res => res.json())
             .then(data => setFriends(data))
     }, [])
+
+
+    const viewProfile = (user) => {
+        setViewUser(user)
+        navigate('userProfile')
+        
+    }
+
 
     const filteredFriends = useMemo(() => {
         return friends.filter(friend => {
@@ -37,7 +46,7 @@ function Suggest_Friends({  user  }){
                             return(
                                 <li>
                                     <div>
-                                        <img src={friend.profile_picture}/>
+                                        <img src={friend.profile_picture} onClick={() => viewProfile(friend)}/>
                                         <h3>{friend.username}</h3>
                                     </div>
                                     <button><FontAwesomeIcon icon={faMessage} size="xl"/></button>

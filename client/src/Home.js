@@ -3,15 +3,15 @@ import All_Group from "./All_Group";
 import NavBar from "./NavBar.js"
 import Search from "./Search.js";
 
-function Home({user, createModal, setCreateModal, filterNav, setFilterNav, allPost, setAllPost}){
+function Home({ setViewUser, user, createModal, setCreateModal, filterNav, setFilterNav, allPost, setAllPost}){
 
 
     return(
         <>
             <div class={`${createModal ? "no_overflow": "wrapper"}`}> 
-                <Search/>
+                <Search setViewUser={setViewUser}/>
                 <NavBar createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav}/>
-                <All_Group user={user} filterNav={filterNav} allPost={allPost} setAllPost={setAllPost}/>
+                <All_Group user={user} filterNav={filterNav} allPost={allPost} setAllPost={setAllPost} setViewUser={setViewUser}/>
             </div>
         </>
         

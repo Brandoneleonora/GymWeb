@@ -3,7 +3,7 @@ import Post from "./Posts";
 import Suggest_Friends from "./Friends.js";
 import Create_Post from "./Create_Post.js";
 
-function All_Group({filterNav, allPost, setAllPost, user}){
+function All_Group({filterNav, allPost, setViewUser, user}){
     
     return(
         <div class="post-cont">
@@ -23,7 +23,7 @@ function All_Group({filterNav, allPost, setAllPost, user}){
                     
                 })}
             </div>
-            <Suggest_Friends user={user}/>
+            <Suggest_Friends setViewUser={setViewUser} user={user}/>
         </div>
     )
 }
