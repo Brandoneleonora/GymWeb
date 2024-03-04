@@ -70,7 +70,7 @@ function App() {
         <Route path='login' element={<LogIn setUser={setUser} setlogged={setLoggedIn} />}/>
         <Route path="signup" element={<SignUp setUser={setUser} setlogged={setLoggedIn}/>}/>
         <Route path="messages" element={<Messages createModal={createModal} setCreateModal={setCreateModal}/>}/>
-        <Route path='userProfile' element={<User_Profile allPost={allPost} viewUser={viewUser}/>}/>
+        <Route path='userProfile' element={<User_Profile allPost={allPost} viewUser={viewUser} user={user} />}/>
       </Routes>
     </main>
    

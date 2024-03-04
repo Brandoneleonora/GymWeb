@@ -1,11 +1,9 @@
-import React,{ useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { useState, useEffect } from "react"
 import NavBar from "./NavBar"
 import blank from "./white.jpg"
 
 
-function User_Profile({ viewUser, allPost }){
-    const navigate = useNavigate()
+function User_Profile({ viewUser, allPost, user }){
     const userPhotos = allPost.filter(p => viewUser.id === p.user_id)
     const [userValues, setUserValues] = useState({
         backgroundSrc: viewUser.background_image,
@@ -17,7 +15,20 @@ function User_Profile({ viewUser, allPost }){
         followers: viewUser.followers,
         following: viewUser.following
     })
+    const [isFriend, setIsFriend] = useState(false)
 
+    useEffect(() => {
+        fetch(`/${user.username}/friends`)
+            .then(res => res.json())
+            .then(data => {
+                data.forEach((e) => {
+                    if (e.username === viewUser.username){
+                        setIsFriend(true)
+                    }
+                })
+            })
+    }, [])   
+    
     
         return(
         <> 
@@ -55,6 +66,7 @@ function User_Profile({ viewUser, allPost }){
                                 <li><span>Saved</span></li>
                                 <li><span>Liked </span></li>
                             </ul>
+                            {isFriend ? <button>Friends</button>: <button>Add Friend</button>}
                         </div>
                         <div class="profile-images">
                             <ul>
