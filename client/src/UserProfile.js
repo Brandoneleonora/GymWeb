@@ -66,7 +66,7 @@ function User_Profile({ viewUser, allPost, user }){
                                 <li><span>Saved</span></li>
                                 <li><span>Liked </span></li>
                             </ul>
-                            {isFriend ? <button>Friends</button>: <button>Add Friend</button>}
+                            {isFriend ? <button>Unfriend</button>: <button>Add Friend</button>}
                         </div>
                         <div class="profile-images">
                             <ul>
