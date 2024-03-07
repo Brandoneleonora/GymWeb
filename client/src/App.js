@@ -12,33 +12,32 @@ import User_Profile from "./UserProfile";
 
 
 function App() {
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState(null)
   const [viewUser, setViewUser] = useState('')
-  const [friends, setFriends] = useState([])
-  const [loggedIn, setLoggedIn] = useState(false)
   const [allPost, setAllPost] = useState(null)
   const [createModal, setCreateModal] = useState(false)
-  const navigate = useNavigate()
   const [filterNav, setFilterNav] = useState("All")
+  const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try{
-  //       const resp = await fetch("/checksession")
-  //       if (!resp.ok) {
-  //         throw Error("Bad Response")
-  //       }
-  //       const data = await resp.json()
-  //       setLoggedIn(true)
-  //       setUser(data)
-  //     }catch (error){
-  //       navigate('login')
-  //       console.log("error")
-  //     }
+
+
+  useEffect(() => {
+    (async () => {
+      try{
+        const resp = await fetch("/me")
+        if (!resp.ok) {
+          throw Error("Bad Response")
+        }
+        const data = await resp.json()
+        setUser(data)
+      }catch (error){
+        console.log(error)
+        navigate('login')
+      }
      
-  //   }
-  //   )();
-  // }, [])
+    }
+    )();
+  }, [])
 
 
   useEffect(() => {
@@ -58,19 +57,18 @@ function App() {
     )();
   }, [])
 
-  console.log(viewUser)
   
   
   return (
     <main>
-      {createModal ? <Create createModal={createModal} setCreateModal={setCreateModal}/> : null}
+      {createModal ? <Create user={user} createModal={createModal} setCreateModal={setCreateModal}/> : null}
       <Routes>
-        <Route path="/" element={<Home setViewUser={setViewUser} user={user} createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav} allPost={allPost} setAllPost={setAllPost}/>}/>
-        <Route path="profile" element={<Profile setUser={setUser} user={user} setlogged={setLoggedIn} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
-        <Route path='login' element={<LogIn setUser={setUser} setlogged={setLoggedIn} />}/>
-        <Route path="signup" element={<SignUp setUser={setUser} setlogged={setLoggedIn}/>}/>
-        <Route path="messages" element={<Messages createModal={createModal} setCreateModal={setCreateModal}/>}/>
-        <Route path='userProfile' element={<User_Profile allPost={allPost} viewUser={viewUser} user={user} />}/>
+        <Route path="/" element={user && <Home setViewUser={setViewUser} user={user} createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav} allPost={allPost} setAllPost={setAllPost}/>}/>
+        <Route path="profile" element={user && <Profile setUser={setUser} user={user} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
+        <Route path='login' element={<LogIn setUser={setUser}/>}/>
+        <Route path="signup" element={<SignUp setUser={setUser}/>}/>
+        <Route path="messages" element={user && <Messages createModal={createModal} setCreateModal={setCreateModal}/>}/>
+        <Route path='userProfile' element={user && <User_Profile allPost={allPost} viewUser={viewUser} user={user} />}/>
       </Routes>
     </main>
    

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import whiteblank from "./road.jpg"
+import whiteblank from "./white.jpg"
 import ProfileModal from "./ProfileModal"
 import NavBar from "./NavBar.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -104,7 +104,6 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
         .then(data => {
             console.log(data)
             navigate("/login")
-            setlogged(false)
         })
     }
 
@@ -191,9 +190,7 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
                             <div class="profile-images">
                                 <ul>
                                     {profilePhotos.map(p => {
-                                        if (p.image == null) {
-                                            return <li><img src={whiteblank}/></li>
-                                        }else {
+                                        if (p.image) {
                                             return <li><img src={p.image} /></li>
                                         }
                                     })}

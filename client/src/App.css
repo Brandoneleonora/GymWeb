@@ -742,7 +742,7 @@ body.active-modal {
 
 .bottom-image img {
     height: 100%;
-    width: 100%;
+    width: 75%;
     object-fit: cover;
     border-bottom-left-radius:5px ; 
 }

@@ -33,7 +33,6 @@ function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
         fetch("/logout")
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 navigate('/login')
             })
     }

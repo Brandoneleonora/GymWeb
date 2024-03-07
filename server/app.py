@@ -16,7 +16,6 @@ friends_schema = FriendsSchema(many=True)
 
 
 
-
 @app.route('/signup', methods = ['POST'])
 def sign_up():
     if request.method == 'POST':
@@ -78,17 +77,6 @@ def logout():
 
 
 
-@app.route("/checksession", methods=['GET'])
-def check_session():
-    if request.method == 'GET':
-        if "user" in session:
-            user = User.query.filter(User.username == session["user"]).first()
-            return user_schema.jsonify(user), 200
-        else:
-            return jsonify("need to sign in"), 400
-
-
-
 @app.route('/home', methods=['GET'])
 def home():
 
@@ -98,6 +86,16 @@ def home():
 
 
 
+
+@app.route("/me", methods=['GET'])
+def get_current_user():
+    username = session.get("user")
+    if request.method == 'GET':
+        if username:
+            user = User.query.filter(User.username == username).first()
+            return user_schema.jsonify(user), 200
+        else:
+            return jsonify({"Error":"Got Nothing"}), 400
 
 
 @app.route('/posts', methods = ['POST'])
@@ -110,7 +108,7 @@ def allPosts():
         new_post = Post(
             data['post_type'].lower(),
             data['body'],
-            data['user'],
+            data['user_id'],
             data['post_username'],
             data['image']
         )

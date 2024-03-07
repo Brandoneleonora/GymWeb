@@ -11,8 +11,7 @@ function Create({ user, createModal, setCreateModal }){
     const [imgSrc, setImgSrc] = useState("#")
     const [typeOfPost, setPostType] = useState("All")
     const [createFilter, setCreateFilter] = useState(false)
-
-
+    const[caption, setCaption] = useState('')
 
 
     const previewImage = (event) => {
@@ -51,6 +50,29 @@ function Create({ user, createModal, setCreateModal }){
     }
     
 
+    const postImage = () =>{
+        fetch("posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                post_type: typeOfPost,
+                body: caption,
+                user_id: user.id,
+                post_username: user.username,
+                image: imgSrc
+            })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log("Success:", data)
+                setCreateModal(false)
+                setCaption("")
+                setPostType("All")
+            })
+            .catch((error) => console.error("Error:", error));
+    }
 
     return (
         <div class="create-wrapper" onClick={closeCreate}>
@@ -59,14 +81,14 @@ function Create({ user, createModal, setCreateModal }){
                 <div class="create-header">
                 {image ? null : <button class="back_button" onClick={backButton}>Back</button>}
                     <h3>Share A Memory</h3>
-                {image ? null : <button class="create_post" >Post</button>}
+                {image ? null : <button class="create_post" onClick={postImage}>Post</button>}
                 </div>
                 <div class="create-bottom">
                     <div class={`${image ? "bottom-default" : "bottom-image"}`}>
                         <input type="file" id="file" name="file"  accept="image/*" onChange={previewImage} onClick={event => event.target.value = null} hidden/>
                         {image ? null : <img id="previewImage" src={imgSrc} alt="previewImage"/> }
                         {!image && <div class="right-container">
-                        <textarea class={"caption_holder"} placeholder="Caption Here..."></textarea>
+                        <textarea value={caption} onChange={(e)=>setCaption(e.target.value)} class={"caption_holder"} placeholder="Caption Here..."></textarea>
                         <div class="filter-create">
                             <button onClick={() => setCreateFilter(!createFilter)}>{typeOfPost}{createFilter ? <span><FontAwesomeIcon icon={faAngleUp} size='xl' /></span> : <span><FontAwesomeIcon icon={faAngleDown} size='xl' /></span>}</button>
                              <ul onClick={filterClick} class={`create-filter-list ${createFilter ? "menu-active" : "menu-inactive"}`}>
