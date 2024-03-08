@@ -23,7 +23,7 @@ body{
 }
 
 .dark-mode {
-    --primary-color: #141414;
+    --primary-color: #000000;
     --text-color: #ffffff;
 
 }
@@ -342,7 +342,9 @@ body.active-modal {
         color: var(--second-accent-color);
     }
 
-
+    .filter-list li{
+        font-size: 0.85rem;
+    }
 
     .navbar-wrapper {
         width: 90px;
@@ -398,10 +400,7 @@ body.active-modal {
     }
 
     .filter-container {
-        width: fit-content;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: none;
     }
 
 
@@ -1113,7 +1112,7 @@ body.active-modal {
 
 .edit_image{
     display: flex;
-    color: var(--primary-color);
+    color: var(--text-color);
     justify-content: center;
     align-items: center;
     position: absolute;

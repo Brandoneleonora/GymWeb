@@ -20,7 +20,6 @@ function App() {
   const navigate = useNavigate()
 
 
-
   useEffect(() => {
     (async () => {
       try{

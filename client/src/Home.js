@@ -3,7 +3,7 @@ import All_Group from "./All_Group";
 import NavBar from "./NavBar.js"
 import Search from "./Search.js";
 
-function Home({ setViewUser, user, createModal, setCreateModal, filterNav, setFilterNav, allPost, setAllPost}){
+function Home({ darkMode, setDarkMode, setViewUser, user, createModal, setCreateModal, filterNav, setFilterNav, allPost, setAllPost}){
 
 
     return(

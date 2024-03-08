@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
@@ -7,7 +7,6 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faCircleUser} from '@fortawesome/free-solid-svg-icons'
 import { faFilter } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import { faG } from '@fortawesome/free-solid-svg-icons'
@@ -18,9 +17,23 @@ import { faMoon } from '@fortawesome/free-solid-svg-icons'
 
 
 function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
-    const [darkMode, setDarkMode] = useState(true)
     const [filterActive, setFilterActive] = useState(false)
+    const [darkMode, setDarkMode] = useState(false)
     const navigate = useNavigate()
+
+    useEffect(() =>{
+        if(localStorage.getItem("darkMode") === "true"){
+            document.body.classList.add("dark-mode")
+            setDarkMode(true)
+        }
+    },[])
+
+
+    const webMode = () => {
+        document.body.classList.toggle("dark-mode")
+        setDarkMode(!darkMode)
+    }
+
 
 
     const changeFilter = (e) => {
@@ -49,12 +62,12 @@ function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
                     <NavLink to={"/profile"}><FontAwesomeIcon icon={faCircleUser} size='xl'/><span>Profile</span></NavLink>
                     {darkMode ?
                     <button onClick={() => {
-                        document.body.classList.toggle("dark-mode")
-                        setDarkMode(!darkMode)
+                        webMode()
+                        localStorage.setItem("darkMode", false) 
                     }}><FontAwesomeIcon icon={faSun} size='xl'/><span>Light Mode</span></button> :
                     <button onClick={() => {
-                        document.body.classList.toggle("dark-mode")
-                        setDarkMode(!darkMode)
+                        webMode()
+                        localStorage.setItem("darkMode", true) 
                     }} ><FontAwesomeIcon icon={faMoon} size='xl'/><span>Dark Mode</span></button>
                     }
                     <div class="filter-container">   
@@ -71,7 +84,6 @@ function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
                 </div>
                 <div class="bottom-navbar">
                     <button onClick={logout}><FontAwesomeIcon icon={faArrowRightFromBracket} size="xl" /><span>Logout</span></button>
-                    <button><FontAwesomeIcon icon={faBars} size={"xl"}/><span>Other</span></button>
                 </div>
             </div>
         </div>
