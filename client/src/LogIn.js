@@ -10,7 +10,7 @@ function LogIn({ setUser, setlogged }){
 
     function onSubmit(e){
         e.preventDefault()
-        fetch("https://gymeco.netlify.app/login",{
+        fetch("https://gymweb-s9ic.onrender.com/login",{
             method: 'POST',
             headers: {"Content-type": "application/json"},
             body:  JSON.stringify({
