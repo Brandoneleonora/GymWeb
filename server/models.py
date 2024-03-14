@@ -99,22 +99,24 @@ class Post(db.Model):
     post_type = db.Column(db.String, nullable=False)
     body = db.Column(db.String, nullable=False)
     image = db.Column(db.String)
+    likes = db.Column(db.Integer)
 
     #Relationships
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
 
-    def __init__(self, post_type, body, user_id, post_username, image):
+    def __init__(self, post_type, body, user_id, post_username, image, likes):
         self.post_type = post_type
         self.body = body
         self.user_id = user_id
         self.post_username = post_username
         self.image = image
+        self.likes = likes
 
 
 class PostSchema(ma.SQLAlchemySchema):
     class Meta:
-        fields = ('post_type', 'body', 'user_id', 'post_username', "image")
+        fields = ('post_type', 'body', 'user_id', 'post_username', "image", "likes")
 
 
 class Friends(db.Model):

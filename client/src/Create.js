@@ -3,17 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
-import { faX } from '@fortawesome/free-solid-svg-icons'
 
 
-function Create({ user, createModal, setCreateModal }){
+function Create({ BASE_URL, user, createModal, setCreateModal }){
     const [image, setImage] = useState(true)
     const [imgSrc, setImgSrc] = useState("#")
     const [typeOfPost, setPostType] = useState("All")
     const [createFilter, setCreateFilter] = useState(false)
     const[caption, setCaption] = useState('')
 
-
+    
     const previewImage = (event) => {
         const file = event.target.files[0]
 
@@ -51,7 +50,7 @@ function Create({ user, createModal, setCreateModal }){
     
 
     const postImage = () =>{
-        fetch("posts", {
+        fetch(`${BASE_URL}/posts`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -61,7 +60,8 @@ function Create({ user, createModal, setCreateModal }){
                 body: caption,
                 user_id: user.id,
                 post_username: user.username,
-                image: imgSrc
+                image: imgSrc,
+                likes: 0
             })
         })
             .then(res => res.json())
@@ -76,7 +76,6 @@ function Create({ user, createModal, setCreateModal }){
 
     return (
         <div class="create-wrapper" onClick={closeCreate}>
-        <button class={"create_exit"} onClick={() => setCreateModal(!createModal)}><span><FontAwesomeIcon icon={faX} size='xl' /></span></button>
             <div class="create-container">
                 <div class="create-header">
                 {image ? null : <button class="back_button" onClick={backButton}>Back</button>}

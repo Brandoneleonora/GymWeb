@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import whiteblank from "./white.jpg"
 import ProfileModal from "./ProfileModal"
 import NavBar from "./NavBar.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -23,11 +22,13 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
         followers: user.followers,
         following: user.following
     })
+    const BASE_URL = "https://gymweb-s9ic.onrender.com"
+    
     
 
     useEffect(() => {
         if (profileValues.backgroundSrc !== user.background_image){
-            fetch(`profile/${user.username}`, {
+            fetch(`${BASE_URL}/profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
@@ -40,7 +41,7 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
             })
         }
         else if (profileValues.profileSrc !== user.profile_picture){
-            fetch(`profile/${user.username}`, {
+            fetch(`${BASE_URL}/profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
@@ -53,7 +54,7 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
             })
         }
         else if (profileValues.bio !== user.bio){
-            fetch(`profile/${user.username}`, {
+            fetch(`${BASE_URL}/profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
@@ -67,7 +68,7 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
         }
 
         else if (profileValues.email !== user.email){
-            fetch(`profile/${user.username}`, {
+            fetch(`${BASE_URL}/profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
@@ -81,7 +82,7 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
         }
 
         else if (profileValues.lift_type !== user.lift_type){
-            fetch(`profile/${user.username}`, {
+            fetch(`${BASE_URL}/profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({

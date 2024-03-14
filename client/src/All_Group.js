@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Post from "./Posts";
 import Suggest_Friends from "./Friends.js";
 import Create_Post from "./Create_Post.js";
 
-function All_Group({filterNav, allPost, setViewUser, user}){
-    
+function All_Group({ BASE_URL, filterNav, allPost, setViewUser, user}){
+    const [friends, setFriends] = useState([])
+
+
+    useEffect(() => {
+        fetch(`${BASE_URL}/${user.username}/friends`)
+            .then(res => res.json())
+            .then(data => setFriends(data))
+    }, [])
+
+
+
+
     return(
         <div class="post-cont">
             <div class="post-wrapper">
@@ -13,14 +24,14 @@ function All_Group({filterNav, allPost, setViewUser, user}){
                     if (filterNav.toLowerCase() == "all") {
                         if(p.image != null){
                             return(
-                                <Post caption={p.body} username={p.post_username} image={p.image}/>
+                                <Post caption={p.body} username={p.post_username} image={p.image} likes={p.likes}/>
                                 )      
                         }                  
                     }
                     else if (filterNav.toLowerCase() == p.post_type){
                         if(p.image != null){
                             return(
-                                <Post caption={p.body} username={p.post_username} image={p.image}/>
+                                <Post caption={p.body} username={p.post_username} image={p.image} likes={p.likes}/>
                             )
                         }
                        
@@ -28,7 +39,7 @@ function All_Group({filterNav, allPost, setViewUser, user}){
                     
                 })}
             </div>
-            <Suggest_Friends setViewUser={setViewUser} user={user}/>
+            <Suggest_Friends friends={friends} setFriends={setFriends} BASE_URL={BASE_URL} setViewUser={setViewUser} user={user}/>
         </div>
     )
 }

@@ -19,7 +19,7 @@ function SignUp({ setUser, setlogged }){
     })
     const [defaultImage, setDefaultImage] = useState(null)
     const [defaultProfile, setDefaultProfile] = useState(null)
-
+    const BASE_URL = "https://gymweb-s9ic.onrender.com"
     const navigate = useNavigate()
 
 
@@ -46,7 +46,7 @@ function SignUp({ setUser, setlogged }){
     const onSubmit = e => {
         e.preventDefault()
 
-        fetch("signup", {
+        fetch(`${BASE_URL}/signup`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"

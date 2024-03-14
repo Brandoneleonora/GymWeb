@@ -1,20 +1,18 @@
 import React, { useState, useEffect, useMemo } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import User_Profile from "./UserProfile"
 import { useNavigate } from 'react-router-dom'
 
 
 
-function Search({ setViewUser }) {
+function Search({ setViewUser, BASE_URL }) {
     const [searchList, setSearchList] = useState(false)
     const [query, setQuery] = useState('')
     const [users, setUsers] = useState([])
     const navigate = useNavigate()
 
-
     useEffect(() => {
-        fetch("users")
+        fetch(`${BASE_URL}/users`)
             .then(res => res.json())
             .then(data => setUsers(data))
     }, [])

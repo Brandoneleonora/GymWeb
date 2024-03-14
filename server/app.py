@@ -110,7 +110,8 @@ def allPosts():
             data['body'],
             data['user_id'],
             data['post_username'],
-            data['image']
+            data['image'],
+            data["likes"]
         )
 
         db.session.add(new_post)

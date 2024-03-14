@@ -16,9 +16,11 @@ function User_Profile({ viewUser, allPost, user }){
         following: viewUser.following
     })
     const [isFriend, setIsFriend] = useState(false)
+    const BASE_URL = "https://gymweb-s9ic.onrender.com"
+
 
     useEffect(() => {
-        fetch(`/${user.username}/friends`)
+        fetch(`${BASE_URL}/${user.username}/friends`)
             .then(res => res.json())
             .then(data => {
                 data.forEach((e) => {

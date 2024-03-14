@@ -16,14 +16,14 @@ function App() {
   const [viewUser, setViewUser] = useState('')
   const [allPost, setAllPost] = useState(null)
   const [createModal, setCreateModal] = useState(false)
-  const [filterNav, setFilterNav] = useState("All")
+  const BASE_URL = "https://gymweb-s9ic.onrender.com"
   const navigate = useNavigate()
 
 
   useEffect(() => {
     (async () => {
       try{
-        const resp = await fetch("/me")
+        const resp = await fetch(`${BASE_URL}/me`)
         if (!resp.ok) {
           throw Error("Bad Response")
         }
@@ -42,7 +42,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try{
-        const resp = await fetch("/home")
+        const resp = await fetch(`${BASE_URL}/home`)
         if (!resp.ok) {
           throw Error("Bad Response")
         }
@@ -60,14 +60,14 @@ function App() {
   
   return (
     <main>
-      {createModal ? <Create user={user} createModal={createModal} setCreateModal={setCreateModal}/> : null}
+      {createModal ? <Create BASE_URL={BASE_URL} user={user} createModal={createModal} setCreateModal={setCreateModal}/> : null}
       <Routes>
-        <Route path="/" element={user && <Home setViewUser={setViewUser} user={user} createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav} allPost={allPost} setAllPost={setAllPost}/>}/>
-        <Route path="profile" element={user && <Profile setUser={setUser} user={user} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
-        <Route path='login' element={<LogIn setUser={setUser}/>}/>
-        <Route path="signup" element={<SignUp setUser={setUser}/>}/>
-        <Route path="messages" element={user && <Messages createModal={createModal} setCreateModal={setCreateModal}/>}/>
-        <Route path='userProfile' element={user && <User_Profile allPost={allPost} viewUser={viewUser} user={user} />}/>
+        <Route path="/" element={<Home BASE_URL={BASE_URL} setViewUser={setViewUser} user={user} createModal={createModal} setCreateModal={setCreateModal} allPost={allPost} setAllPost={setAllPost}/>}/>
+        <Route path="profile" element={user && < Profile BASE_URL={BASE_URL} setUser={setUser} user={user} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
+        <Route path='login' element={<LogIn BASE_URL={BASE_URL} setUser={setUser}/>}/>
+        <Route path="signup" element={<SignUp BASE_URL={BASE_URL} setUser={setUser}/>}/>
+        <Route path="messages" element={user && <Messages BASE_URL={BASE_URL} createModal={createModal} setCreateModal={setCreateModal}/>}/>
+        <Route path='userProfile' element={user && <User_Profile BASE_URL={BASE_URL} allPost={allPost} viewUser={viewUser} user={user} />}/>
       </Routes>
     </main>
    

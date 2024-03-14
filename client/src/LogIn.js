@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-function LogIn({ setUser, setlogged }){
+function LogIn({ setUser }){
     let password = useRef()
     let user = useRef()
     const navigate = useNavigate()
+    const BASE_URL = "https://gymweb-s9ic.onrender.com"
 
+    
     function onSubmit(e){
         e.preventDefault()
-        fetch("https://gymweb-s9ic.onrender.com/login",{
+        fetch(`${BASE_URL}/login`,{
             method: 'POST',
             headers: {"Content-type": "application/json"},
             body:  JSON.stringify({
@@ -25,7 +27,6 @@ function LogIn({ setUser, setlogged }){
             return res.json()
         })
         .then(data => {
-            console.log(data)
             setUser(data)
             navigate('/')
         })

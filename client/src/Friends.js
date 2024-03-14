@@ -4,18 +4,11 @@ import blank from "./white.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
-function Suggest_Friends({  user, setViewUser  }){
+function Suggest_Friends({ friends, setFriends, user, setViewUser, BASE_URL}){
     const [query, setQuery] = useState('')
-    const [friends, setFriends] = useState([])
     const navigate = useNavigate()
-
-    useEffect(() => {
-        fetch(`/${user.username}/friends`)
-            .then(res => res.json())
-            .then(data => setFriends(data))
-    }, [])
-
-
+    
+    
     const viewProfile = (user) => {
         setViewUser(user)
         navigate('userProfile')

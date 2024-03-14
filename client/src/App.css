@@ -13,7 +13,7 @@
 
 
 :root {
-    --primary-color: #f0f0f0;
+    --primary-color: #ffffff;
     --text-color: #000000;
     --second-accent-color: #24ff1c;    
 }
@@ -36,15 +36,23 @@ body.active-modal {
 
 /*Sign Up Css*/
 
+@media (width < 755px) {
+    .form-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
 
 .container {
     max-width: 750px;
     width: 100%;
+    height: 100vh;
     padding: 15rem 0;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 
@@ -54,7 +62,6 @@ body.active-modal {
 }
 .logo-container {
     padding: 0 2rem;
-    border-radius: 60%;
     background: var(--primary-color);
     display: flex;
     align-items: center;
@@ -109,6 +116,7 @@ body.active-modal {
 .signup-form input {
     outline: none;
     border: none;
+    background: #f0f0f0;
     padding: 1rem;
     margin: 0.5rem;
     width: 90%;
@@ -150,6 +158,7 @@ body.active-modal {
 .login-form input {
     outline: none;
     border: none;
+    background: #f0f0f0;   
     padding: 1rem;
     margin: 1.5rem;
     width: 90%;
@@ -382,7 +391,7 @@ body.active-modal {
     }
 
     .filter-button {
-        width: fit-content;
+        display:none;
     }
 
     .top-navbar {
@@ -412,8 +421,11 @@ body.active-modal {
 
 /*Home Page Css*/
 
+
 .wrapper {
     display: flex;
+    width: 100%;
+    height: 100%;
     position: relative;
 }
 
@@ -426,17 +438,6 @@ body.active-modal {
 
 /*Seach*/
 
-@media (width < 900px){
-    .friendFinderWrapper {
-        width: 500px;
-    }
-}
-
-@media (width < 770){
-    .friendFinderWrapper {
-        margin: 0 auto 0;
-    }
-}
 
 .friendFinderList li{
     display: flex;
@@ -470,11 +471,11 @@ body.active-modal {
 }
 
 .friendFinderWrapper {
-    background: #ffffff;
+    background: #f0f0f0;
     border-radius: 5px;
     height: fit-content;
     max-height:375px;
-    max-width: 700px;
+    max-width: 500px;
     top: 0;
     left: 0;
     right: 0;
@@ -500,7 +501,7 @@ body.active-modal {
     width: 100%;
     padding: 1rem;
     border: none;
-    background: #ffffff;
+    background:#f0f0f0;
 }
 
 .friendFinder:focus {
@@ -752,7 +753,8 @@ body.active-modal {
 /*Create_Post Css*/
 
 .create_post_wrapper {
-    min-width: 500px;
+    max-width: 500px;
+    width: 100%;
     margin: 1rem 0;
     border-radius: 10px;
     /* background: rgba(134, 124, 124, 0.151); */
@@ -799,7 +801,7 @@ body.active-modal {
 .create_post_header div:nth-child(2) input{
     border: none;
     width: 100%;
-    background:#ffffff;
+    background:#f0f0f0;;
     padding: 1rem;
     border-radius: 30vh;
 }
@@ -847,7 +849,6 @@ body.active-modal {
 /*Post Css*/
 
 
-
 .post-cont {
     margin:  5rem auto 0;
     display: flex;
@@ -857,10 +858,10 @@ body.active-modal {
 
 .post-wrapper {
     max-width: 500px;
+    /* width: 100%; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-inline: auto;
 }
 
 
@@ -921,8 +922,7 @@ body.active-modal {
     --dropdown-menu-Y: 1.5rem;
     position: absolute;
     right: 0;
-    left: 0;
-    margin: auto;
+    top: 0;
     list-style: none;
     background:#ffffff;
     width: 7rem;
@@ -1378,7 +1378,7 @@ body.active-modal {
  .content-container input {
     border: none;
     margin: .5rem  0;
-    background: #ffffff;
+    background:#f0f0f0;;
     padding: .75rem;
     border-radius: 5px;
     width: 100%;

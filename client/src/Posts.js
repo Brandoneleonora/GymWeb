@@ -9,7 +9,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-function Post({ caption, username, image}){
+function Post({ caption, username, image, likes}){
 
     const [ open, setOpen ] = useState(false)
     
@@ -42,7 +42,7 @@ function Post({ caption, username, image}){
                 </div>
                 <div class="user-caption">
                     <div class="user-likes">
-                        <p><span>200</span>Likes</p>
+                        <p><span>{likes}</span>Likes</p>
                     </div> 
                     <div class="post-words">
                         <p><span>{username}</span>{caption}</p>
