@@ -47,7 +47,7 @@ function App() {
           throw Error("Bad Response")
         }
         const data = await resp.json()
-        setAllPost(data)
+        setAllPost(data.reverse())
       }catch (error){
         console.log(error)
       }

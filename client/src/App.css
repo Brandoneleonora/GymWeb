@@ -968,10 +968,24 @@ body.active-modal {
     font-size: .75rem;
 }
 
+.heart_btn{
+    background: none;
+    cursor: pointer;
+    border:none;
+    font-size: 1rem;
+}
+
+.heart_btn.liked{
+    color: var(--second-accent-color);
+}
 
 
+.heart_btn.notLiked{
+    color: var(--text-color);
+}
 
-.left-buttons button,
+
+.left-buttons button:nth-child(2),
 .right-buttons button,
 .post-header button{
     background: none;

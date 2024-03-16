@@ -17,8 +17,10 @@ class User(db.Model):
     email = db.Column(db.String)
     background_image = db.Column(db.String)
     profile_picture = db.Column(db.String)
+    
 
     #Relationships
+    liked = db.relationship('Post', secondary="liked_posts", backref="liked_posts")
     posts = db.relationship('Post', backref='user')
     friends = db.relationship('Friends', backref="user")
 
@@ -136,3 +138,11 @@ class Friends(db.Model):
 class FriendsSchema(ma.SQLAlchemySchema):
     class Meta:
         fields = ('user_id', 'name')
+
+
+
+
+liked_posts = db.Table("liked_posts",
+    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
+    db.Column("post_id", db.Integer, db.ForeignKey("posts.id"))
+)

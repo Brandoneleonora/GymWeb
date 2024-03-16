@@ -12,7 +12,8 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 function Post({ caption, username, image, likes}){
 
     const [ open, setOpen ] = useState(false)
-    
+    const [liked , setLiked] = useState(false)
+
     return(
         <div class="post-container">
             <div class="post-header">
@@ -33,8 +34,8 @@ function Post({ caption, username, image, likes}){
             <div class="post-caption">
                 <div class="post-buttons">
                     <div class="left-buttons">
-                    <button><FontAwesomeIcon icon={faHeart} style={{color: "#d01616",}} size={"xl"} /></button>
-                    <button><FontAwesomeIcon icon={faComment} size={"xl"} /></button>
+                        <button onClick={() => setLiked(!liked)} class={`heart_btn ${liked ? "liked" : "notLiked"}`}><FontAwesomeIcon icon={faHeart} size={"xl"} /></button>
+                        <button><FontAwesomeIcon icon={faComment} size={"xl"} /></button>
                     </div>
                     <div class="right-buttons">
                     <button><FontAwesomeIcon icon={faShare} size={"xl"} /></button>

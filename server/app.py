@@ -84,7 +84,15 @@ def home():
         posts = Post.query.all()
         return jsonify(posts_schema.dump(posts)), 200
 
+# @app.route('/liked', methods=['GET', 'POST'])
+# def posts_liked():
 
+#     if request.method == 'GET':
+#         user = User.query.filter(User.username == "E").first()
+#         post = Post.query.filter(Post.id == 17).first()
+#         user.liked.append(post)
+#         print(user.liked)
+#         return jsonify("hello"), 200
 
 
 @app.route("/me", methods=['GET'])
@@ -129,12 +137,20 @@ def get_user():
 
 
 
-@app.route('/profile/<string:username>', methods=['GET', 'PATCH'])
+@app.route('/<string:username>', methods=['GET', 'PATCH'])
 def user_profile(username):
     user = User.query.filter(User.username == username).first()
     
     if request.method == 'GET':
         return user_schema.jsonify(user), 200
+
+    elif request.method == 'POST':
+        data = request.get_json()
+
+        friend = Friend(data['name'], user_id = user.id)
+        db.session.add(friend)
+        db.session.commit()
+        return friend_schema.jsonify(friend), 200
         
     elif request.method == 'PATCH':
         data = request.get_json()
@@ -195,7 +211,6 @@ def friends(username):
         db.session.commit()
 
         return friend_schema.jsonify(new_friend), 200
-
 
 
 
