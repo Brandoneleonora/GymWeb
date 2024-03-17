@@ -3,7 +3,7 @@ import NavBar from "./NavBar"
 import blank from "./white.jpg"
 
 
-function User_Profile({ viewUser, allPost, user }){
+function User_Profile({ BASE_URL, viewUser, allPost, user }){
     const userPhotos = allPost.filter(p => viewUser.id === p.user_id)
     const [userValues, setUserValues] = useState({
         backgroundSrc: viewUser.background_image,
@@ -16,7 +16,6 @@ function User_Profile({ viewUser, allPost, user }){
         following: viewUser.following
     })
     const [isFriend, setIsFriend] = useState(false)
-    const BASE_URL = "https://gymweb-s9ic.onrender.com"
 
 
     useEffect(() => {
@@ -24,12 +23,38 @@ function User_Profile({ viewUser, allPost, user }){
             .then(res => res.json())
             .then(data => {
                 data.forEach((e) => {
+                    console.log(e.username)
                     if (e.username === viewUser.username){
                         setIsFriend(true)
                     }
                 })
             })
     }, [])   
+
+
+    const addFriend = () => {
+        fetch(`${BASE_URL}/${user.username}/friends`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: userValues.username,
+                user_id: user.id,
+            })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log("Success:", data)
+            })
+            .catch((error) => console.error("Error:", error));
+    }
+
+const unAddFriend = () => {
+    console.log("not my friend anymore")
+} 
+
+
     
     
         return(
@@ -68,7 +93,7 @@ function User_Profile({ viewUser, allPost, user }){
                                 <li><span>Saved</span></li>
                                 <li><span>Liked </span></li>
                             </ul>
-                            {isFriend ? <button>Unfriend</button>: <button>Add Friend</button>}
+                            {isFriend ? <button onClick={unAddFriend}>Unfriend</button>: <button onClick={addFriend}>Add Friend</button>}
                         </div>
                         <div class="profile-images">
                             <ul>

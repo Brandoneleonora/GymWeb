@@ -143,14 +143,6 @@ def user_profile(username):
     
     if request.method == 'GET':
         return user_schema.jsonify(user), 200
-
-    elif request.method == 'POST':
-        data = request.get_json()
-
-        friend = Friend(data['name'], user_id = user.id)
-        db.session.add(friend)
-        db.session.commit()
-        return friend_schema.jsonify(friend), 200
         
     elif request.method == 'PATCH':
         data = request.get_json()

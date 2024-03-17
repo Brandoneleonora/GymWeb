@@ -81,7 +81,7 @@ function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCre
         }
 
         else if (profileValues.lift_type !== user.lift_type){
-            fetch(`${BASE_URL}/profile/${user.username}`, {
+            fetch(`${BASE_URL}/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
