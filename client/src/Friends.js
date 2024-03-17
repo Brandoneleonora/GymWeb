@@ -4,7 +4,7 @@ import blank from "./white.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
-function Suggest_Friends({ friends, setFriends, user, setViewUser, BASE_URL}){
+function Suggest_Friends({ friends, setViewUser}){
     const [query, setQuery] = useState('')
     const navigate = useNavigate()
     

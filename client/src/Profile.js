@@ -7,7 +7,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 
 
-function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }){
+function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCreateModal }){
     const navigate = useNavigate()
     const profilePhotos = post.filter(p => user.id === p.user_id)
     const [showModal, setShowModal] = useState(false)
@@ -22,7 +22,6 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
         followers: user.followers,
         following: user.following
     })
-    const BASE_URL = "https://gymweb-s9ic.onrender.com"
     
     
 
@@ -100,7 +99,7 @@ function Profile({ setUser, user, setlogged, post, createModal, setCreateModal }
 
 
     const handleLogOut = () =>{
-        fetch('/logout')
+        fetch(`${BASE_URL}/logout`)
         .then(res => res.json())
         .then(data => {
             console.log(data)

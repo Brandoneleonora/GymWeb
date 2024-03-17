@@ -16,7 +16,7 @@ import { faMoon } from '@fortawesome/free-solid-svg-icons'
 
 
 
-function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
+function NavBar({BASE_URL, setCreateModal, createModal, filterNav, setFilterNav}){
     const [filterActive, setFilterActive] = useState(false)
     const [darkMode, setDarkMode] = useState(false)
     const navigate = useNavigate()
@@ -43,7 +43,7 @@ function NavBar({setCreateModal, createModal, filterNav, setFilterNav}){
 
 
     const logout = () => {
-        fetch("/logout")
+        fetch(`${BASE_URL}/logout`)
             .then(res => res.json())
             .then(data => {
                 navigate('/login')

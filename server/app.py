@@ -190,9 +190,13 @@ def user_profile(username):
 @app.route('/<string:username>/friends', methods=['GET', 'POST'])
 def friends(username):
     user = User.query.filter(User.username == username).first()
+    friends = []
 
     if request.method == "GET":
-        return friends_schema.jsonify(user.friends), 200
+        for friend in user.friends:
+            friends.append(User.query.filter(User.username == friend.name).first())
+
+        return users_schema.jsonify(friends), 200
         
 
     if request.method == 'POST':

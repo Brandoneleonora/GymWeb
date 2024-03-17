@@ -28,7 +28,7 @@ function All_Group({ BASE_URL, filterNav, allPost, setViewUser, user}){
                     }       
                 })}
             </div>
-            <Suggest_Friends friends={friends} setFriends={setFriends} BASE_URL={BASE_URL} setViewUser={setViewUser} user={user}/>
+            <Suggest_Friends friends={friends} setViewUser={setViewUser}/>
         </div>
     )
 }
