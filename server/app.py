@@ -1,6 +1,6 @@
 from flask import request, jsonify, session
 from config import app, db, bcrypt
-from models import User, Post, Friends, UserSchema, PostSchema, FriendsSchema
+from models import User, Post, Friends, UserSchema, PostSchema, FriendsSchema, Saved_PostsSchema
 from werkzeug.utils import secure_filename
 app.secret_key = b'\xd5e\xc5M\x9fS\x81~U\xa8x\xc2\xec@r\x84'
 
@@ -13,6 +13,9 @@ posts_schema = PostSchema(many=True)
 
 friend_schema = FriendsSchema()
 friends_schema = FriendsSchema(many=True)
+
+saved_post = Saved_PostsSchema()
+saved_posts = Saved_PostsSchema(many=True)
 
 
 
