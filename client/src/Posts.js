@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart} from '@fortawesome/free-solid-svg-icons'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
@@ -9,10 +9,28 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-function Post({ caption, username, image, likes}){
+function Post({ BASE_URL, allPost,  caption, username, image, likes}){
 
     const [ open, setOpen ] = useState(false)
-    const [liked , setLiked] = useState(false)
+    const [ liked , setLiked ] = useState(false)
+
+    useEffect(() => {
+        (async () => {
+          try{
+            const resp = await fetch(`${BASE_URL}/${username}/liked`)
+            if (!resp.ok) {
+              throw Error("Bad Response")
+            }
+            const data = await resp.json()
+            console.log(data)
+          }catch (error){
+            console.log(error)
+          }
+         
+        }
+        )();
+      }, [])
+
 
     return(
         <div class="post-container">

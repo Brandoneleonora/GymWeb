@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import blank from "./white.jpg"
+import default_image from "./default.jpg"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
@@ -39,7 +39,7 @@ function Suggest_Friends({ friends, setViewUser}){
                             return(
                                 <li>
                                     <div>
-                                        <img src={friend.profile_picture} onClick={() => viewProfile(friend)}/>
+                                        <img src={friend.profile_picture ? friend.profile_picture : default_image} onClick={() => viewProfile(friend)}/>
                                         <h3>{friend.username}</h3>
                                     </div>
                                     <button><FontAwesomeIcon icon={faMessage} size="xl"/></button>

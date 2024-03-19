@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import NavBar from "./NavBar"
-import blank from "./white.jpg"
 
 
 function User_Profile({ BASE_URL, viewUser, allPost, user }){
@@ -46,6 +45,7 @@ function User_Profile({ BASE_URL, viewUser, allPost, user }){
             .then(res => res.json())
             .then((data) => {
                 console.log("Success:", data)
+                setIsFriend(!isFriend)
             })
             .catch((error) => console.error("Error:", error));
     }
@@ -98,10 +98,8 @@ const unAddFriend = () => {
                         <div class="profile-images">
                             <ul>
                                 {userPhotos.map(p => {
-                                    if (p.image == null) {
-                                        return <li><img src={blank}/></li>
-                                    }else {
-                                        return <li><img src={p.image} /></li>
+                                    if (p.image != null) {
+                                        return <li><img src={p.image}/></li>
                                     }
                                 })}
                             </ul>

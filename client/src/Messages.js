@@ -1,7 +1,6 @@
 import React from "react"
 import NavBar from "./NavBar";
-import blank from "./white.jpg"
-import blackblank from "./black.jpg"
+import default_image from "./default.jpg"
 
 function Messages({createModal, setCreateModal}) {
     return(
@@ -12,13 +11,13 @@ function Messages({createModal, setCreateModal}) {
                     <ul>
                         <li>
                             <a href={'#'}>
-                                <img src={blank}/>
+                                <img src={default_image}/>
                                 <span>Kristen</span>
                             </a>  
                         </li>
                         <li>
                             <a href={'#'}>
-                                <img src={blackblank}/>
+                                <img src={default_image}/>
                                 <span>Kristen Eleonora</span>
                             </a>  
                         </li>

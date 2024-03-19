@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
-
+import default_image from "./default.jpg"
 
 
 function Search({ setViewUser, BASE_URL }) {
@@ -54,7 +54,7 @@ function Search({ setViewUser, BASE_URL }) {
                     return(
                         <li class={"eachFriend"}>
                             <div>
-                                <img src={user.profile_picture}/>
+                                <img src={user.profile_picture ? user.profile_picture : default_image}/>
                                 <h3>{user.username}</h3>
                             </div>
                             <button onClick={() => viewProfile(user)}>View Profile</button>

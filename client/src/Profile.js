@@ -9,7 +9,7 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCreateModal }){
     const navigate = useNavigate()
-    const profilePhotos = post.filter(p => user.id === p.user_id)
+    // const profilePhotos = post.filter(p => user.id === p.user_id)
     const [showModal, setShowModal] = useState(false)
     const [profileValues, setProfileValues] = useState({
         backgroundSrc: user.background_image,
@@ -169,7 +169,7 @@ function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCre
                             <ul class="numbers-container">
                                 <li><span>{profileValues.followers}</span><span>Followers</span></li>
                                 <li><span>{profileValues.following}</span><span>Following</span></li>
-                                <li><span>{profilePhotos.length}</span><span>Posts</span></li>
+                                {/* <li><span>{profilePhotos.length}</span><span>Posts</span></li> */}
                             </ul>
                             <div class="bio-container">
                                 <p>{user.bio}</p>
@@ -189,7 +189,7 @@ function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCre
                             </div>
                             <div class="profile-images">
                                 <ul>
-                                    {profilePhotos.map(p => {
+                                    {post.filter(p => user.id === p.user_id).map(p => {
                                         if (p.image) {
                                             return <li><img src={p.image} /></li>
                                         }
