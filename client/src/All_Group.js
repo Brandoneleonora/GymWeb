@@ -13,22 +13,6 @@ function All_Group({ BASE_URL, filterNav, allPost, setViewUser, user}){
             .then(data => setFriends(data))
     }, [])
 
-    useEffect(() => {
-        (async () => {
-          try{
-            const resp = await fetch(`${BASE_URL}/${user.username}/liked`)
-            if (!resp.ok) {
-              throw Error("Bad Response")
-            }
-            const data = await resp.json()
-            console.log(data)
-          }catch (error){
-            console.log(error)
-          }
-         
-        }
-        )();
-      }, [])
     
 
     return(
@@ -37,11 +21,9 @@ function All_Group({ BASE_URL, filterNav, allPost, setViewUser, user}){
                 <Create_Post user={user}/>
                 {allPost && allPost.map(p => {
                     if (filterNav.toLowerCase() == "all" || filterNav.toLowerCase() == p.post_type) {
-                        if(p.image != null){
-                            return(
-                                <Post caption={p.body} username={p.post_username} image={p.image} likes={p.likes} BASE_URL={BASE_URL} allPost={allPost}/>
-                                )      
-                        }                  
+                      if(p.image != null){
+                        return(<Post post_id={p.id} caption={p.body} username={p.post_username} image={p.image} likes={p.likes} BASE_URL={BASE_URL} user={user}/>)      
+                      }                  
                     }       
                 })}
             </div>

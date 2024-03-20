@@ -20,9 +20,11 @@ class User(db.Model):
     
 
     #Relationships
-    liked = db.relationship('Post', secondary="liked_posts", backref="liked_posts")
+    liked = db.relationship('Post', secondary="liked_posts", backref="liked_users")
+    saved = db.relationship('Post', secondary="saved_posts", backref="saved_users")
     posts = db.relationship('Post', backref='user')
     friends = db.relationship('Friends', backref="user")
+    
 
     def __init__(self, first_name, last_name, username, password, followers, following, bio, lift_type, email, background_image, profile_picture):
         self.first_name = first_name
@@ -36,6 +38,56 @@ class User(db.Model):
         self.email = email
         self.background_image = background_image
         self.profile_picture = profile_picture
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+
+    id = db.Column(db.Integer, primary_key=True)
+    post_username = db.Column(db.String)
+    post_type = db.Column(db.String, nullable=False)
+    body = db.Column(db.String, nullable=False)
+    image = db.Column(db.String)
+    likes = db.Column(db.Integer)
+
+    #Relationships
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __init__(self, id, post_type, body, user_id, post_username, image, likes):
+        self.id = id 
+        self.post_type = post_type
+        self.body = body
+        self.user_id = user_id
+        self.post_username = post_username
+        self.image = image
+        self.likes = likes
+
+
+liked_posts = db.Table(
+    "liked_posts",
+    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
+    db.Column("post_id", db.Integer, db.ForeignKey("posts.id"))
+)
+
+saved_posts = db.Table(
+    "saved_posts",
+    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
+    db.Column("post_id", db.Integer, db.ForeignKey("posts.id"))
+)
+
+
+
+class Friends(db.Model):
+    __tablename__ = "friends"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+
+    #Relationships
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __init__(self, user_id, name):
+        self.user_id = user_id
+        self.name = name
 
 
 #Marshmallow Schemas for the models
@@ -93,46 +145,12 @@ class UserSchema(ma.SQLAlchemySchema):
 
 
 
-class Post(db.Model):
-    __tablename__ = 'posts'
-
-    id = db.Column(db.Integer, primary_key=True)
-    post_username = db.Column(db.String)
-    post_type = db.Column(db.String, nullable=False)
-    body = db.Column(db.String, nullable=False)
-    image = db.Column(db.String)
-    likes = db.Column(db.Integer)
-
-    #Relationships
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-
-    def __init__(self, post_type, body, user_id, post_username, image, likes):
-        self.post_type = post_type
-        self.body = body
-        self.user_id = user_id
-        self.post_username = post_username
-        self.image = image
-        self.likes = likes
 
 
 class PostSchema(ma.SQLAlchemySchema):
     class Meta:
-        fields = ('post_type', 'body', 'user_id', 'post_username', "image", "likes")
+        fields = ('id', 'post_type', 'body', 'user_id', 'post_username', "image", "likes")
 
-
-class Friends(db.Model):
-    __tablename__ = "friends"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-
-    #Relationships
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-    def __init__(self, user_id, name):
-        self.user_id = user_id
-        self.name = name
 
 
 class FriendsSchema(ma.SQLAlchemySchema):
@@ -141,27 +159,3 @@ class FriendsSchema(ma.SQLAlchemySchema):
 
 
 
-class Saved_Posts(db.Model):
-    __tablename__ = "saved_posts"
-
-    id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer)
-
-    #Relationships
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-    def __init__(self, user_id, post_id):
-        self.user_id = user_id
-        self.post_id = post_id
-
-
-class Saved_PostsSchema(ma.SQLAlchemySchema):
-    class Meta:
-        fields = ('user_id', 'post_id')
-
-
-
-liked_posts = db.Table("liked_posts",
-    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
-    db.Column("post_id", db.Integer, db.ForeignKey("posts.id"))
-)

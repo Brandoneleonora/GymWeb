@@ -18,7 +18,7 @@ function User_Profile({ BASE_URL, viewUser, allPost, user }){
 
 
     useEffect(() => {
-        fetch(`${BASE_URL}/${user.username}/friends`)
+        fetch(`/${user.username}/friends`)
             .then(res => res.json())
             .then(data => {
                 data.forEach((e) => {
@@ -32,7 +32,7 @@ function User_Profile({ BASE_URL, viewUser, allPost, user }){
 
 
     const addFriend = () => {
-        fetch(`${BASE_URL}/${user.username}/friends`, {
+        fetch(`/${user.username}/friends`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

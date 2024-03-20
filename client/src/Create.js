@@ -50,7 +50,7 @@ function Create({ BASE_URL, user, createModal, setCreateModal }){
     
 
     const postImage = () =>{
-        fetch(`${BASE_URL}/posts`, {
+        fetch(`/home`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

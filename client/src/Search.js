@@ -12,7 +12,7 @@ function Search({ setViewUser, BASE_URL }) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`${BASE_URL}/users`)
+        fetch(`/users`)
             .then(res => res.json())
             .then(data => setUsers(data))
     }, [])

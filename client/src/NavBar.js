@@ -43,7 +43,7 @@ function NavBar({BASE_URL, setCreateModal, createModal, filterNav, setFilterNav}
 
 
     const logout = () => {
-        fetch(`${BASE_URL}/logout`)
+        fetch(`/logout`)
             .then(res => res.json())
             .then(data => {
                 navigate('/login')

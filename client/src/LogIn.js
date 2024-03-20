@@ -12,7 +12,7 @@ function LogIn({ setUser }){
     
     function onSubmit(e){
         e.preventDefault()
-        fetch(`${BASE_URL}/login`,{
+        fetch(`/login`,{
             method: 'POST',
             headers: {"Content-type": "application/json"},
             body:  JSON.stringify({

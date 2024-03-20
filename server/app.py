@@ -1,6 +1,6 @@
 from flask import request, jsonify, session
 from config import app, db, bcrypt
-from models import User, Post, Friends, UserSchema, PostSchema, FriendsSchema, Saved_PostsSchema
+from models import User, Post, Friends, UserSchema, PostSchema, FriendsSchema
 from werkzeug.utils import secure_filename
 app.secret_key = b'\xd5e\xc5M\x9fS\x81~U\xa8x\xc2\xec@r\x84'
 
@@ -13,10 +13,6 @@ posts_schema = PostSchema(many=True)
 
 friend_schema = FriendsSchema()
 friends_schema = FriendsSchema(many=True)
-
-saved_post = Saved_PostsSchema()
-saved_posts = Saved_PostsSchema(many=True)
-
 
 
 @app.route('/signup', methods = ['POST'])
@@ -80,40 +76,16 @@ def logout():
 
 
 
-@app.route('/home', methods=['GET'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
 
     if request.method == 'GET' :
         posts = Post.query.all()
         return jsonify(posts_schema.dump(posts)), 200
 
-# @app.route('/liked', methods=['GET', 'POST'])
-# def posts_liked():
+    
 
-#     if request.method == 'GET':
-#         user = User.query.filter(User.username == "E").first()
-#         post = Post.query.filter(Post.id == 17).first()
-#         user.liked.append(post)
-#         print(user.liked)
-#         return jsonify("hello"), 200
-
-
-@app.route("/me", methods=['GET'])
-def get_current_user():
-    username = session.get("user")
-    if request.method == 'GET':
-        if username:
-            user = User.query.filter(User.username == username).first()
-            return user_schema.jsonify(user), 200
-        else:
-            return jsonify({"Error":"Got Nothing"}), 400
-
-
-@app.route('/posts', methods = ['POST'])
-def allPosts():
-
-
-    if request.method == 'POST':
+    elif request.method == 'POST':
         data = request.get_json()
 
         new_post = Post(
@@ -129,6 +101,36 @@ def allPosts():
         db.session.commit()
 
         return post_schema.jsonify(new_post), 200
+
+
+@app.route('/<int:post_id>/<string:username>/liked', methods=['GET', 'POST'])
+def posts_liked(post_id, username):
+    user = User.query.filter(User.username == username).first()
+    post = Post.query.filter(Post.id == post_id).first()
+
+    if request.method == 'POST':
+        user.liked.append(post)
+        db.session.commit()
+        return jsonify("Success"), 200
+
+
+@app.route('/<string:username>/liked', methods=['GET'])
+def get_liked(username):
+    user = User.query.filter(User.username == username).first()
+    if request.method == 'GET':
+        return posts_schema.jsonify(user.liked), 200
+
+
+@app.route("/me", methods=['GET'])
+def get_current_user():
+    username = session.get("user")
+    if request.method == 'GET':
+        if username:
+            user = User.query.filter(User.username == username).first()
+            return user_schema.jsonify(user), 200
+        else:
+            return jsonify({"Error":"Got Nothing"}), 400
+
 
 
 @app.route("/users", methods=['GET'])

@@ -7,10 +7,12 @@ import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 
 
-function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCreateModal }){
+function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal }){
     const navigate = useNavigate()
     // const profilePhotos = post.filter(p => user.id === p.user_id)
     const [showModal, setShowModal] = useState(false)
+    const [profileNav, setProfileNav] = useState('Photos')
+    const [likedPosts, setLikedPosts] = useState()
     const [profileValues, setProfileValues] = useState({
         backgroundSrc: user.background_image,
         editButton: false,
@@ -26,6 +28,21 @@ function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCre
     
 
     useEffect(() => {
+
+        (async () => {
+            try{
+              const resp = await fetch(`${profileValues.username}/liked`)
+              if (!resp.ok) {
+                throw Error("Bad Response")
+              }
+              const data = await resp.json()
+              setLikedPosts(data)
+            }catch (error){
+              console.log(error)
+            }
+           
+          })()
+
         if (profileValues.backgroundSrc !== user.background_image){
             fetch(`${BASE_URL}/profile/${user.username}`, {
                 method: 'PATCH',
@@ -99,7 +116,7 @@ function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCre
 
 
     const handleLogOut = () =>{
-        fetch(`${BASE_URL}/logout`)
+        fetch(`/logout`)
         .then(res => res.json())
         .then(data => {
             console.log(data)
@@ -141,6 +158,29 @@ function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCre
         setProfileValues({...profileValues, editButton: !profileValues.editButton})
     }
 
+    const PhotoChanger = () => {
+        if (profileNav == "Photos") {
+            return(
+                post.filter(p => user.id === p.user_id).map(p => {
+                    if (p.image) {
+                        return <li><img src={p.image} /></li>
+                    }
+                })
+            )
+        }
+        else if (profileNav == "Liked"){
+            return(
+                likedPosts.map(p => {
+                    if (p.image) {
+                        return <li><img src={p.image} /></li>
+                    }
+                })
+            )
+        }
+        else if (profileNav == "Saved"){
+
+        }
+    }
 
 
     return(
@@ -180,20 +220,16 @@ function Profile({ BASE_URL, setUser, user, setlogged, post, createModal, setCre
                         <div class="photo-container">
                             <div class="profile-navbar">
                                 <ul>
-                                    <li><span>Photos</span></li>
-                                    <li><span>Saved</span></li>
-                                    <li><span>Liked </span></li>
+                                    <li><span onClick={() => setProfileNav("Photos")}>Photos</span></li>
+                                    <li><span onClick={() => setProfileNav("Saved")}>Saved</span></li>
+                                    <li><span onClick={() => setProfileNav("Liked")}>Liked </span></li>
                                     <li><span onClick={() => setShowModal(!showModal)}>Edit Profile</span></li>
                                 </ul>
                                 <button onClick={handleLogOut}>Log Out</button>
                             </div>
                             <div class="profile-images">
                                 <ul>
-                                    {post.filter(p => user.id === p.user_id).map(p => {
-                                        if (p.image) {
-                                            return <li><img src={p.image} /></li>
-                                        }
-                                    })}
+                                    <PhotoChanger/>
                                 </ul>
                             </div>
                         </div>

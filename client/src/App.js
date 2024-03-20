@@ -42,7 +42,7 @@ function App() {
   useEffect(() => {
     (async () => {
       try{
-        const resp = await fetch(`${BASE_URL}/home`)
+        const resp = await fetch(`/home`)
         if (!resp.ok) {
           throw Error("Bad Response")
         }

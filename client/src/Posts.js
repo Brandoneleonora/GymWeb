@@ -9,20 +9,27 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-function Post({ BASE_URL, allPost,  caption, username, image, likes}){
+function Post({ user, post_id ,BASE_URL ,  caption, username, image, likes}){
 
     const [ open, setOpen ] = useState(false)
     const [ liked , setLiked ] = useState(false)
 
+
+
     useEffect(() => {
         (async () => {
           try{
-            const resp = await fetch(`${BASE_URL}/${username}/liked`)
+            const resp = await fetch(`${user.username}/liked`)
             if (!resp.ok) {
               throw Error("Bad Response")
             }
             const data = await resp.json()
             console.log(data)
+            data.map(d => {
+                if (d.id == post_id){
+                    setLiked(true)
+                }
+            })
           }catch (error){
             console.log(error)
           }
@@ -31,6 +38,21 @@ function Post({ BASE_URL, allPost,  caption, username, image, likes}){
         )();
       }, [])
 
+    const likedPicture = () => {
+        setLiked(!liked)
+        fetch(`${post_id}/${username}/liked`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify()
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log("Success:", data)
+            })
+            .catch((error) => console.error("Error:", error));
+    }
 
     return(
         <div class="post-container">
@@ -52,7 +74,7 @@ function Post({ BASE_URL, allPost,  caption, username, image, likes}){
             <div class="post-caption">
                 <div class="post-buttons">
                     <div class="left-buttons">
-                        <button onClick={() => setLiked(!liked)} class={`heart_btn ${liked ? "liked" : "notLiked"}`}><FontAwesomeIcon icon={faHeart} size={"xl"} /></button>
+                        <button onClick={likedPicture} class={`heart_btn ${liked && liked ? "liked" : "notLiked"}`}><FontAwesomeIcon icon={faHeart} size={"xl"} /></button>
                         <button><FontAwesomeIcon icon={faComment} size={"xl"} /></button>
                     </div>
                     <div class="right-buttons">
