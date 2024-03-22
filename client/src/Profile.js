@@ -13,6 +13,7 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
     const [showModal, setShowModal] = useState(false)
     const [profileNav, setProfileNav] = useState('Photos')
     const [likedPosts, setLikedPosts] = useState()
+    const [savedPosts, setSavedPosts] = useState()
     const [profileValues, setProfileValues] = useState({
         backgroundSrc: user.background_image,
         editButton: false,
@@ -25,9 +26,25 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
         following: user.following
     })
     
-    
+    useEffect(() => {
+        (async () => {
+            try{
+              const resp = await fetch(`${profileValues.username}/saved`)
+              if (!resp.ok) {
+                throw Error("Bad Response")
+              }
+              const data = await resp.json()
+              setSavedPosts(data)
+            }catch (error){
+              console.log(error)
+            }
+           
+          })()
+    }, [])
 
     useEffect(() => {
+ 
+
 
         (async () => {
             try{
@@ -178,7 +195,13 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
             )
         }
         else if (profileNav == "Saved"){
-
+            return(
+                savedPosts.map(p => {
+                    if (p.image) {
+                        return <li><img src={p.image} /></li>
+                    }
+                })
+            )
         }
     }
 
@@ -209,7 +232,7 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
                             <ul class="numbers-container">
                                 <li><span>{profileValues.followers}</span><span>Followers</span></li>
                                 <li><span>{profileValues.following}</span><span>Following</span></li>
-                                {/* <li><span>{profilePhotos.length}</span><span>Posts</span></li> */}
+                                <li><span>{post.filter(p => user.id === p.user_id).length}</span><span>Posts</span></li>
                             </ul>
                             <div class="bio-container">
                                 <p>{user.bio}</p>

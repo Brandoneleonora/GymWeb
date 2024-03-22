@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart} from '@fortawesome/free-solid-svg-icons'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
@@ -9,38 +9,38 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-function Post({ user, post_id ,BASE_URL ,  caption, username, image, likes}){
+function Post({ likedPost, user, post_id ,BASE_URL ,  caption, username, image, likes}){
 
     const [ open, setOpen ] = useState(false)
     const [ liked , setLiked ] = useState(false)
-
+    const [likeNumber, setLikeNumber] = useState(likes == null ? 0 : likes)
 
 
     useEffect(() => {
-        (async () => {
-          try{
-            const resp = await fetch(`${user.username}/liked`)
-            if (!resp.ok) {
-              throw Error("Bad Response")
+        likedPost.map(post => {
+            if (post.id == post_id){
+                setLiked(true)
             }
-            const data = await resp.json()
-            console.log(data)
-            data.map(d => {
-                if (d.id == post_id){
-                    setLiked(true)
-                }
-            })
-          }catch (error){
-            console.log(error)
-          }
-         
-        }
-        )();
-      }, [])
+        })
+    },[])
 
     const likedPicture = () => {
-        setLiked(!liked)
-        fetch(`${post_id}/${username}/liked`, {
+
+        fetch (`post/${post_id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                likes: likeNumber + 1
+            })
+        })    
+            .then(res => res.json())
+            .then((data) => {
+                console.log("Success", data)
+            })
+
+        fetch(`${post_id}/${user.username}/like_unlike`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -49,9 +49,48 @@ function Post({ user, post_id ,BASE_URL ,  caption, username, image, likes}){
         })
             .then(res => res.json())
             .then((data) => {
-                console.log("Success:", data)
+                console.log(data)
             })
             .catch((error) => console.error("Error:", error));
+
+            setLiked(!liked)
+            setLikeNumber(likeNumber + 1)
+        
+    }
+
+    const unlikedPicture = () => {
+
+        fetch (`post/${post_id}`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                likes: likeNumber - 1
+            })
+        })  
+            .then(res => res.json())
+            .then((data) => {
+                console.log("Success:", data)
+            })
+
+
+        fetch(`${post_id}/${user.username}/like_unlike`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify()
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data)
+            })
+            .catch((error) => console.error("Error:", error));
+
+            setLiked(!liked)
+            setLikeNumber(likeNumber - 1)
+
     }
 
     return(
@@ -63,9 +102,9 @@ function Post({ user, post_id ,BASE_URL ,  caption, username, image, likes}){
                 <div class="header_right">
                     <button class={`icon_btn `} onClick={() => setOpen(!open)}><FontAwesomeIcon icon={faEllipsis} size={"xl"} /></button>
                     <ul class={`edit_list ${open ? "active" : "inactive"}`}>
-                        <li><button><FontAwesomeIcon icon={faBookmark} size={"xl"} /><span>Save</span></button></li>
-                        <li><button><FontAwesomeIcon icon={faEdit} size={"xl"} /><span>Edit</span></button></li>
-                        <li><button><FontAwesomeIcon icon={faTrash} size={"xl"} /><span>Delete</span></button></li>
+                        {user.username != username && <li><button><FontAwesomeIcon icon={faBookmark} size={"xl"} /><span>Save</span></button></li>}
+                        {user.username == username && <li><button><FontAwesomeIcon icon={faEdit} size={"xl"} /><span>Edit</span></button></li>}
+                        {user.username == username && <li><button><FontAwesomeIcon icon={faTrash} size={"xl"} /><span>Delete</span></button></li>}
                     </ul>
                 </div>
                 
@@ -74,7 +113,8 @@ function Post({ user, post_id ,BASE_URL ,  caption, username, image, likes}){
             <div class="post-caption">
                 <div class="post-buttons">
                     <div class="left-buttons">
-                        <button onClick={likedPicture} class={`heart_btn ${liked && liked ? "liked" : "notLiked"}`}><FontAwesomeIcon icon={faHeart} size={"xl"} /></button>
+                        {liked && liked ? <button onClick={unlikedPicture} class={`heart_btn liked`}><FontAwesomeIcon icon={faHeart} size={"xl"} /></button>
+                        : <button onClick={likedPicture} class={`heart_btn notLiked`}><FontAwesomeIcon icon={faHeart} size={"xl"} /></button>}
                         <button><FontAwesomeIcon icon={faComment} size={"xl"} /></button>
                     </div>
                     <div class="right-buttons">
@@ -83,7 +123,7 @@ function Post({ user, post_id ,BASE_URL ,  caption, username, image, likes}){
                 </div>
                 <div class="user-caption">
                     <div class="user-likes">
-                        <p><span>{likes}</span>Likes</p>
+                        <p><span>{likeNumber}</span>Likes</p>
                     </div> 
                     <div class="post-words">
                         <p><span>{username}</span>{caption}</p>

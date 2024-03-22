@@ -9,7 +9,6 @@ function Home({ setViewUser, user, createModal, setCreateModal, allPost, setAllP
     return(
         <>
             <div class={`${createModal ? "no_overflow": "wrapper"}`}> 
-                <Search BASE_URL={BASE_URL} setViewUser={setViewUser}/>
                 <NavBar createModal={createModal} setCreateModal={setCreateModal} filterNav={filterNav} setFilterNav={setFilterNav}/>
                 <All_Group user={user} filterNav={filterNav} allPost={allPost} setAllPost={setAllPost} setViewUser={setViewUser} BASE_URL={BASE_URL}/>
             </div>

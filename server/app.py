@@ -102,8 +102,33 @@ def home():
 
         return post_schema.jsonify(new_post), 200
 
+@app.route("/post/<int:post_id>", methods=['DELETE', 'GET', 'PATCH'])
+def single_post(post_id):
+    post = Post.query.filter(Post.id == post_id).first()
 
-@app.route('/<int:post_id>/<string:username>/liked', methods=['GET', 'POST'])
+    if request.method == 'DELETE':
+        db.session.delete(post)
+        db.session.commit()
+        return post_schema.jsonify(post), 200
+
+    elif request.method == "GET":
+        return post_schema.jsonify(post), 200
+
+    elif request.method == 'PATCH':
+        data = request.get_json()
+        if 'post_type' in data:
+            post.post_type = data['post_type']
+        elif 'likes' in data:
+            post.likes = data['likes']
+        elif 'body' in data:
+            post.body = data['body']
+        elif 'image' in data:
+            post.image = data['image']
+        
+        db.session.commit()
+        return post_schema.jsonify(post), 200
+
+@app.route('/<int:post_id>/<string:username>/like_unlike', methods=['POST', 'DELETE'])
 def posts_liked(post_id, username):
     user = User.query.filter(User.username == username).first()
     post = Post.query.filter(Post.id == post_id).first()
@@ -112,24 +137,53 @@ def posts_liked(post_id, username):
         user.liked.append(post)
         db.session.commit()
         return jsonify("Success"), 200
+    elif request.method == 'DELETE':
+        for liked_post in user.liked:
+            if liked_post == post:
+                user.liked.remove(liked_post)
+                db.session.commit() 
+                return post_schema.jsonify("Success"), 200
+
 
 
 @app.route('/<string:username>/liked', methods=['GET'])
 def get_liked(username):
     user = User.query.filter(User.username == username).first()
-    if request.method == 'GET':
-        return posts_schema.jsonify(user.liked), 200
+    print(user.liked)
+    return posts_schema.jsonify(user.liked), 200
+
+
+@app.route('/<int:post_id>/<string:username>/save_unsave', methods=['POST', 'DELETE'])
+def save_post(post_id, username):
+    user = User.query.filter(User.username == username).first()
+    post = Post.query.filter(Post.id == post_id).first()
+
+    if request.method == 'POST':
+        user.saved.append(post)
+        db.session.commit()
+        return jsonify("Success"), 200
+    elif request.method == 'DELETE':
+        for saved_post in user.saved:
+            if saved_post == post:
+                user.saved.remove(saved_post)
+                db.session.commit() 
+                return post_schema.jsonify("Success"), 200
+
+@app.route('/<string:username>/saved', methods=['GET'])
+def get_saved(username):
+    user = User.query.filter(User.username == username).first()
+    print(user.saved)
+    return posts_schema.jsonify(user.saved), 200
 
 
 @app.route("/me", methods=['GET'])
 def get_current_user():
     username = session.get("user")
-    if request.method == 'GET':
-        if username:
-            user = User.query.filter(User.username == username).first()
-            return user_schema.jsonify(user), 200
-        else:
-            return jsonify({"Error":"Got Nothing"}), 400
+    if username:
+        user = User.query.filter(User.username == username).first()
+        return user_schema.jsonify(user), 200
+    else:
+        return jsonify({"Error":"Got Nothing"}), 400
 
 
 
@@ -142,13 +196,18 @@ def get_user():
 
 
 
-@app.route('/<string:username>', methods=['GET','POST', 'PATCH'])
+@app.route('/<string:username>', methods=['GET', 'PATCH', "DELETE"])
 def user_profile(username):
     user = User.query.filter(User.username == username).first()
     
     if request.method == 'GET':
         return user_schema.jsonify(user), 200
         
+    elif request.method == 'DELETE':
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify("Successfully Deleted"), 200
+
     elif request.method == 'PATCH':
         data = request.get_json()
         errors = user_schema.validate(data)
