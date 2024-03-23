@@ -1620,13 +1620,13 @@ body.active-modal {
 }
 
 .secondary-message p{
-    background: var(--second-accent-color);
+    background: var(--grey);
     width: fit-content;
     padding: 0.5rem;
 }
 
 .main-message p{
-    background: white;
+    background: var(--second-accent-color);
 }
 
 .main-message p, 

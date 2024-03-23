@@ -7,7 +7,7 @@ import Search from "./Search.js";
 function All_Group({ BASE_URL, filterNav, allPost, setViewUser, user}){
     const [friends, setFriends] = useState([])
     const [likedPost, setLikedPost] = useState()
-
+    const [savedPost, setSavedPost] = useState()
     useEffect(() => {
         fetch(`${user.username}/friends`)
             .then(res => res.json())
@@ -30,6 +30,23 @@ function All_Group({ BASE_URL, filterNav, allPost, setViewUser, user}){
         }
         )();
       }, [])
+
+      useEffect(() => {
+        (async () => {
+          try{
+            const resp = await fetch(`${user.username}/saved`)
+            if (!resp.ok) {
+              throw Error("Bad Response")
+            }
+            const data = await resp.json()
+            setSavedPost(data)
+          }catch (error){
+            console.log(error)
+          }
+         
+        }
+        )();
+      }, [])
     
 
     return(
@@ -40,7 +57,7 @@ function All_Group({ BASE_URL, filterNav, allPost, setViewUser, user}){
                 {allPost && allPost.map(p => {
                     if (filterNav.toLowerCase() == "all" || filterNav.toLowerCase() == p.post_type) {
                       if(p.image != null){
-                        return(likedPost && <Post post_id={p.id} caption={p.body} username={p.post_username} image={p.image} likes={p.likes} BASE_URL={BASE_URL} user={user} likedPost={likedPost}/>)      
+                        return(likedPost && <Post post_id={p.id} caption={p.body} username={p.post_username} image={p.image} likes={p.likes} BASE_URL={BASE_URL} user={user} likedPost={likedPost} savedPost={savedPost}/>)      
                       }                  
                     }       
                 })}

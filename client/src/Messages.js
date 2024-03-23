@@ -1,8 +1,41 @@
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 import NavBar from "./NavBar";
 import default_image from "./default.jpg"
 
-function Messages({createModal, setCreateModal}) {
+function Messages({createModal, setCreateModal, socket}) {
+
+    const checkingEnter = (event) => {
+        if (event.key == "Enter"){
+            socket.connect()
+            socket.emit("new_message", event.target.value)
+            event.target.value = ''
+        }
+        
+    }
+
+    useEffect(() => {
+        socket.on("chat", (data) => {
+            let ul = document.getElementById("chat-list")
+            let li = document.createElement("li")
+            let span = document.createElement("span")
+            let p = document.createElement("p")
+            const nodes = [span , p]
+            li.classList.add("main-message")
+            for(let i=0; i < nodes.length; i++){
+                if (nodes[i] == p){
+                    nodes[i].innerHTML = data["message"]
+                }
+                else if (nodes[i] == span){
+                    nodes[i].innerHTML = "Brandon"
+                }
+                li.appendChild(nodes[i])
+            }
+            ul.appendChild(li)
+                    })
+    },[])
+
+    
+
     return(
         <div class="messages-wrapper">
             <NavBar createModal={createModal} setCreateModal={setCreateModal}/>
@@ -25,59 +58,11 @@ function Messages({createModal, setCreateModal}) {
                 </div>
                 <div class="people-messages-container">
                     <div class="chat-container">
-                        <ul>
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>
-                            <li class="secondary-message">
-                                <span>Kristen</span>
-                                <p>Pretty Good</p>
-                            </li>
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>                            
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>                                             
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>
-                            <li class="secondary-message">
-                                <span>Kristen</span>
-                                <p>Pretty Good</p>
-                            </li>
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>                            
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>                                             
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>
-                            <li class="secondary-message">
-                                <span>Kristen</span>
-                                <p>Pretty Good</p>
-                            </li>
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>                            
-                            <li class="main-message">
-                                <span>Brandon</span>
-                                <p>How are you doing today?</p>
-                            </li>                                             
+                        <ul id="chat-list">      
+             
                         </ul>
                         <div class="input-message-container">
-                            <input placeholder={"Send Message..."}/>
-                            <button>Send</button>
+                            <input onKeyUp={(event)=> checkingEnter(event)} placeholder={"Send Message..."}/>
                         </div>
                     </div>
                 </div>

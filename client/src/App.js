@@ -8,8 +8,7 @@ import Profile from "./Profile";
 import Messages from "./Messages";
 import Create from "./Create";
 import User_Profile from "./UserProfile";
-
-
+import io from "socket.io-client"
 
 function App() {
   const [user, setUser] = useState(null)
@@ -18,9 +17,12 @@ function App() {
   const [createModal, setCreateModal] = useState(false)
   const BASE_URL = "https://gymweb-s9ic.onrender.com"
   const navigate = useNavigate()
+  const socket = io({autoConnect: false})
+
 
 
   useEffect(() => {
+
     (async () => {
       try{
         const resp = await fetch(`/me`)
@@ -56,7 +58,8 @@ function App() {
     )();
   }, [])
 
-  
+
+
   
   return (
     <main>
@@ -64,9 +67,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home BASE_URL={BASE_URL} setViewUser={setViewUser} user={user} createModal={createModal} setCreateModal={setCreateModal} allPost={allPost} setAllPost={setAllPost}/>}/>
         <Route path="profile" element={user && < Profile BASE_URL={BASE_URL} setUser={setUser} user={user} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
-        <Route path='login' element={<LogIn BASE_URL={BASE_URL} setUser={setUser}/>}/>
-        <Route path="signup" element={<SignUp BASE_URL={BASE_URL} setUser={setUser}/>}/>
-        <Route path="messages" element={user && <Messages BASE_URL={BASE_URL} createModal={createModal} setCreateModal={setCreateModal}/>}/>
+        <Route path='login' element={<LogIn socket={socket} BASE_URL={BASE_URL} setUser={setUser}/>}/>
+        <Route path="signup" element={<SignUp socket={socket} BASE_URL={BASE_URL} setUser={setUser}/>}/>
+        <Route path="messages" element={user && <Messages socket={socket} BASE_URL={BASE_URL} createModal={createModal} setCreateModal={setCreateModal}/>}/>
         <Route path='userProfile' element={user && <User_Profile BASE_URL={BASE_URL} allPost={allPost} viewUser={viewUser} user={user} />}/>
       </Routes>
     </main>

@@ -2,13 +2,11 @@ import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
-
 function LogIn({ setUser }){
     let password = useRef()
     let user = useRef()
     const navigate = useNavigate()
     const BASE_URL = "https://gymweb-s9ic.onrender.com"
-
     
     function onSubmit(e){
         e.preventDefault()

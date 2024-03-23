@@ -9,12 +9,12 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
 
-function Post({ likedPost, user, post_id ,BASE_URL ,  caption, username, image, likes}){
+function Post({ savedPost, likedPost, user, post_id ,BASE_URL ,  caption, username, image, likes}){
 
     const [ open, setOpen ] = useState(false)
     const [ liked , setLiked ] = useState(false)
     const [likeNumber, setLikeNumber] = useState(likes == null ? 0 : likes)
-
+    const [save, setSave] = useState("Save")
 
     useEffect(() => {
         likedPost.map(post => {
@@ -22,7 +22,48 @@ function Post({ likedPost, user, post_id ,BASE_URL ,  caption, username, image, 
                 setLiked(true)
             }
         })
+        savedPost.map(post => {
+            if (post.id == post_id){
+                setSave("Unsave")
+            }
+        })
     },[])
+
+
+    const saveImage = () => {
+        if (save == "Save"){
+            fetch(`${post_id}/${user.username}/save_unsave`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify()
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data)
+            })
+            .catch((error) => console.error("Error:", error));
+            setSave("Unsave")
+        }
+        else {
+            fetch(`${post_id}/${user.username}/save_unsave`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify()
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    console.log(data)
+                })
+                .catch((error) => console.error("Error:", error));
+            setSave("Save")
+            }
+    }
+
+
 
     const likedPicture = () => {
 
@@ -102,7 +143,7 @@ function Post({ likedPost, user, post_id ,BASE_URL ,  caption, username, image, 
                 <div class="header_right">
                     <button class={`icon_btn `} onClick={() => setOpen(!open)}><FontAwesomeIcon icon={faEllipsis} size={"xl"} /></button>
                     <ul class={`edit_list ${open ? "active" : "inactive"}`}>
-                        {user.username != username && <li><button><FontAwesomeIcon icon={faBookmark} size={"xl"} /><span>Save</span></button></li>}
+                        {user.username != username && <li><button onClick={saveImage}><FontAwesomeIcon icon={faBookmark} size={"xl"} /><span>{save}</span></button></li>}
                         {user.username == username && <li><button><FontAwesomeIcon icon={faEdit} size={"xl"} /><span>Edit</span></button></li>}
                         {user.username == username && <li><button><FontAwesomeIcon icon={faTrash} size={"xl"} /><span>Delete</span></button></li>}
                     </ul>
