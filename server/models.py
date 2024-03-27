@@ -22,8 +22,10 @@ class User(db.Model):
     #Relationships
     liked = db.relationship('Post', secondary="liked_posts", backref="liked_users")
     saved = db.relationship('Post', secondary="saved_posts", backref="saved_users")
+    chats = db.relationship('Chat', backref="users")
     posts = db.relationship('Post', backref='user')
     friends = db.relationship('Friends', backref="user")
+
     
 
     def __init__(self, first_name, last_name, username, password, followers, following, bio, lift_type, email, background_image, profile_picture):
@@ -61,6 +63,36 @@ class Post(db.Model):
         self.image = image
         self.likes = likes
 
+class Chat(db.Model):
+    __tablename__ = "chat"
+
+    id  = db.Column(db.Integer, primary_key=True)
+    chat_name = db.Column(db.String)
+
+    #Relationships
+    messages = db.relationship('Messages', backref='chat')
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    def __init__(self,chat_name, user_id):
+        self.chat_name = chat_name
+        self.user_id = user_id
+
+
+class Messages(db.Model):
+    __tablename__ = "messages"
+
+    id = db.Column(db.Integer, primary_key=True)
+    message_body = db.Column(db.Integer)
+    message_user = db.Column(db.String)
+
+    #Relationships
+    chat_id = db.Column(db.Integer, db.ForeignKey("chat.id"))
+
+    def __init__(self, message_body, message_user, chat_id):
+        self.message_body = message_body
+        self.message_user = message_user
+        self.chat_id = chat_id
+
 
 liked_posts = db.Table(
     "liked_posts",
@@ -73,7 +105,6 @@ saved_posts = db.Table(
     db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
     db.Column("post_id", db.Integer, db.ForeignKey("posts.id"))
 )
-
 
 
 class Friends(db.Model):
@@ -158,4 +189,10 @@ class FriendsSchema(ma.SQLAlchemySchema):
         fields = ('user_id', 'name')
 
 
+class MessageSchema(ma.SQLAlchemySchema):
+    class Meta:
+        fields = ("id", "message_body", "message_user", "chat_id")
 
+class ChatSchema(ma.SQLAlchemySchema):
+    class Meta:
+        fields = ("id", "chat_name", "user_id")

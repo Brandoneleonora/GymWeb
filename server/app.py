@@ -1,7 +1,8 @@
 from flask import request, jsonify, session
-from config import app, db, bcrypt
-from models import User, Post, Friends, UserSchema, PostSchema, FriendsSchema
+from config import app, db, bcrypt, socketio
+from models import User, Post, Friends, Chat, Messages, UserSchema, PostSchema, FriendsSchema, MessageSchema, ChatSchema
 from werkzeug.utils import secure_filename
+from flask_socketio import emit
 app.secret_key = b'\xd5e\xc5M\x9fS\x81~U\xa8x\xc2\xec@r\x84'
 
 #Masrshmallow Schemmas
@@ -13,6 +14,12 @@ posts_schema = PostSchema(many=True)
 
 friend_schema = FriendsSchema()
 friends_schema = FriendsSchema(many=True)
+
+message_schema = MessageSchema()
+messages_schema = MessageSchema(many=True)
+
+chat_schema = ChatSchema()
+chats_schema = ChatSchema(many=True)
 
 
 @app.route('/signup', methods = ['POST'])
@@ -149,7 +156,6 @@ def posts_liked(post_id, username):
 @app.route('/<string:username>/liked', methods=['GET'])
 def get_liked(username):
     user = User.query.filter(User.username == username).first()
-    print(user.liked)
     return posts_schema.jsonify(user.liked), 200
 
 
@@ -172,7 +178,6 @@ def save_post(post_id, username):
 @app.route('/<string:username>/saved', methods=['GET'])
 def get_saved(username):
     user = User.query.filter(User.username == username).first()
-    print(user.saved)
     return posts_schema.jsonify(user.saved), 200
 
 
@@ -268,8 +273,52 @@ def friends(username):
 
         return friend_schema.jsonify(new_friend), 200
 
+@app.route("/chats/<string:username>", methods=['GET', 'POST'])
+def handle_chats(username):
+    user = User.query.filter(User.username == username).first()
+
+    if request.method == 'GET':
+        return chats_schema.jsonify(user.chats),200
+    elif request.method == 'POST':
+        data = request.get_json()
+
+        new_chat = Chat(data["chat_name"], data["user_id"])
+
+        db.session.add(new_chat)
+        db.session.commit()
+
+        return chat_schema.jsonify(new_chat), 200
+
+@app.route("/messages/<int:chat_id>", methods=['GET', 'POST'])
+def handle_messages(chat_id):
+    chat = Chat.query.filter(User.id == chat_id).first()
+
+    if request.method == 'GET':
+        return messages_schema.jsonify(chat.messages), 200
+    elif request.method == 'POST':
+        data = request.get_json()
+
+        new_message = Messages(data["message_body"], data["message_user"], chat_id)
+
+        db.session.add(new_message)
+        db.session.commit()
+
+        return message_schema.jsonify(new_message), 200
+
+@socketio.on("connect")
+def handle_connect():
+    print("Client connected!")
 
 
+@socketio.on("user_join")
+def handle_user_join(username):
+    print(f"User {username} joined!")
+
+
+@socketio.on("new_message")
+def handle_new_message(message):
+    print(f"New Message: {message}")
+    emit("chat", {"message": message}, brodcast=True)
 
 if __name__ == '__main__':
-    app.run()
+    socketio.run(app)
