@@ -61,7 +61,7 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
           })()
 
         if (profileValues.backgroundSrc !== user.background_image){
-            fetch(`${BASE_URL}/profile/${user.username}`, {
+            fetch(`profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
@@ -74,7 +74,7 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
             })
         }
         else if (profileValues.profileSrc !== user.profile_picture){
-            fetch(`${BASE_URL}/profile/${user.username}`, {
+            fetch(`profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
@@ -87,7 +87,7 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
             })
         }
         else if (profileValues.bio !== user.bio){
-            fetch(`${BASE_URL}/profile/${user.username}`, {
+            fetch(`profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
@@ -101,7 +101,7 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
         }
 
         else if (profileValues.email !== user.email){
-            fetch(`${BASE_URL}/profile/${user.username}`, {
+            fetch(`profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({
@@ -115,7 +115,7 @@ function Profile({ BASE_URL, setUser, user, post, createModal, setCreateModal })
         }
 
         else if (profileValues.lift_type !== user.lift_type){
-            fetch(`${BASE_URL}/${user.username}`, {
+            fetch(`profile/${user.username}`, {
                 method: 'PATCH',
                 headers: {"Content-type": 'application/json'},
                 body: JSON.stringify({

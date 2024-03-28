@@ -282,7 +282,8 @@ def handle_chats(username):
     elif request.method == 'POST':
         data = request.get_json()
 
-        new_chat = Chat(data["chat_name"], data["user_id"])
+        new_chat = Chat(data["chat_name"], data["chat_image"])
+        user.chats.append(new_chat)
 
         db.session.add(new_chat)
         db.session.commit()
@@ -291,7 +292,7 @@ def handle_chats(username):
 
 @app.route("/messages/<int:chat_id>", methods=['GET', 'POST'])
 def handle_messages(chat_id):
-    chat = Chat.query.filter(User.id == chat_id).first()
+    chat = Chat.query.filter(Chat.id == chat_id).first()
 
     if request.method == 'GET':
         return messages_schema.jsonify(chat.messages), 200

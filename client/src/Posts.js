@@ -17,16 +17,21 @@ function Post({ savedPost, likedPost, user, post_id ,BASE_URL ,  caption, userna
     const [save, setSave] = useState("Save")
 
     useEffect(() => {
-        likedPost.map(post => {
-            if (post.id == post_id){
-                setLiked(true)
-            }
-        })
-        savedPost.map(post => {
-            if (post.id == post_id){
-                setSave("Unsave")
-            }
-        })
+        if(likedPost){
+            likedPost.map(post => {
+                if (post.id == post_id){
+                    setLiked(true)
+                }
+            })
+        }
+       
+        if(savedPost){
+            savedPost.map(post => {
+                if (post.id == post_id){
+                    setSave("Unsave")
+                }
+            })
+        }
     },[])
 
 

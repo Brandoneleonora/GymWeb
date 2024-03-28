@@ -33,7 +33,7 @@ function App() {
         setUser(data)
       }catch (error){
         console.log(error)
-        navigate('login')
+        // navigate('login')
       }
      
     }
@@ -69,7 +69,7 @@ function App() {
         <Route path="profile" element={user && < Profile BASE_URL={BASE_URL} setUser={setUser} user={user} post={allPost} createModal={createModal} setCreateModal={setCreateModal}/>}/>
         <Route path='login' element={<LogIn socket={socket} BASE_URL={BASE_URL} setUser={setUser}/>}/>
         <Route path="signup" element={<SignUp socket={socket} BASE_URL={BASE_URL} setUser={setUser}/>}/>
-        <Route path="messages" element={user && <Messages socket={socket} BASE_URL={BASE_URL} createModal={createModal} setCreateModal={setCreateModal}/>}/>
+        <Route path="messages" element={user && <Messages user={user} socket={socket} BASE_URL={BASE_URL} createModal={createModal} setCreateModal={setCreateModal}/>}/>
         <Route path='userProfile' element={user && <User_Profile BASE_URL={BASE_URL} allPost={allPost} viewUser={viewUser} user={user} />}/>
       </Routes>
     </main>

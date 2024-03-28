@@ -22,7 +22,7 @@ class User(db.Model):
     #Relationships
     liked = db.relationship('Post', secondary="liked_posts", backref="liked_users")
     saved = db.relationship('Post', secondary="saved_posts", backref="saved_users")
-    chats = db.relationship('Chat', backref="users")
+    chats = db.relationship('Chat', secondary="chat_tables", backref="users")
     posts = db.relationship('Post', backref='user')
     friends = db.relationship('Friends', backref="user")
 
@@ -54,8 +54,7 @@ class Post(db.Model):
     #Relationships
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self, id, post_type, body, user_id, post_username, image, likes):
-        self.id = id 
+    def __init__(self, post_type, body, user_id, post_username, image, likes):
         self.post_type = post_type
         self.body = body
         self.user_id = user_id
@@ -68,14 +67,14 @@ class Chat(db.Model):
 
     id  = db.Column(db.Integer, primary_key=True)
     chat_name = db.Column(db.String)
+    chat_image = db.Column(db.String)
 
     #Relationships
     messages = db.relationship('Messages', backref='chat')
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self,chat_name, user_id):
+    def __init__(self,chat_name, chat_image):
         self.chat_name = chat_name
-        self.user_id = user_id
+        self.chat_image = chat_image
 
 
 class Messages(db.Model):
@@ -106,6 +105,11 @@ saved_posts = db.Table(
     db.Column("post_id", db.Integer, db.ForeignKey("posts.id"))
 )
 
+chat_tables = db.Table(
+    "chat_tables",
+    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
+    db.Column("chat_id", db.Integer, db.ForeignKey("chat.id"))
+)
 
 class Friends(db.Model):
     __tablename__ = "friends"
@@ -195,4 +199,4 @@ class MessageSchema(ma.SQLAlchemySchema):
 
 class ChatSchema(ma.SQLAlchemySchema):
     class Meta:
-        fields = ("id", "chat_name", "user_id")
+        fields = ("id", "chat_name", "user_id", "chat_image")

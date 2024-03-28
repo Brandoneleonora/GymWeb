@@ -8,6 +8,7 @@ function All_Group({ BASE_URL, filterNav, allPost, setViewUser, user}){
     const [friends, setFriends] = useState([])
     const [likedPost, setLikedPost] = useState()
     const [savedPost, setSavedPost] = useState()
+
     useEffect(() => {
         fetch(`${user.username}/friends`)
             .then(res => res.json())

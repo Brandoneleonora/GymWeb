@@ -27,6 +27,7 @@ function LogIn({ setUser }){
         .then(data => {
             setUser(data)
             navigate('/')
+            console.log(data)
         })
         .catch(err => {
             console.log(err.message)

@@ -46,7 +46,7 @@ function SignUp({ setUser, setlogged }){
     const onSubmit = e => {
         e.preventDefault()
 
-        fetch(`${BASE_URL}/signup`, {
+        fetch(`/signup`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
